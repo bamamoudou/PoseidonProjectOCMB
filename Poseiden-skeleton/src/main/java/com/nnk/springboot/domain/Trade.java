@@ -7,17 +7,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "trade")
 public class Trade {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull
 	private Integer tradeId;
+	@NotBlank(message = "Account must not be empty and must contain a character string")
 	private String account;
+	@NotBlank(message = "Type must not be empty and must contain a character string")
 	private String type;
+	@DecimalMin(message = "Buy quantity must not be empty and must contain a number", value = "0.01")
 	private Double buyQuantity;
 	private Double sellQuantity;
 	private Double buyPrice;
@@ -41,6 +44,13 @@ public class Trade {
 	}
 
 	public Trade(String account, String type) {
+		this.account = account;
+		this.type = type;
+	}
+
+	public Trade(Integer tradeId, String account, String type) {
+		super();
+		this.tradeId = tradeId;
 		this.account = account;
 		this.type = type;
 	}
@@ -212,5 +222,4 @@ public class Trade {
 	public void setSide(String side) {
 		this.side = side;
 	}
-
 }

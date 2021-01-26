@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -12,17 +14,30 @@ import javax.validation.constraints.NotNull;
 public class Rating {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull
 	private Integer id;
+	@NotBlank(message = "MoodysRating must not be empty and must contain a character string")
 	private String moodysRating;
+	@NotBlank(message = "SandPRating must not be empty and must contain a character string")
 	private String sandPRating;
+	@NotBlank(message = "FitchRating must not be empty and must contain a character string")
 	private String fitchRating;
+	@Min(message = "OrderNumber must not be empty and must contain a number", value = 1)
 	private Integer orderNumber;
 
 	public Rating() {
 	}
 
 	public Rating(String moodysRating, String sandPRating, String fitchRating, Integer orderNumber) {
+		this.moodysRating = moodysRating;
+		this.sandPRating = sandPRating;
+		this.fitchRating = fitchRating;
+		this.orderNumber = orderNumber;
+	}
+
+	public Rating(@NotNull Integer id, String moodysRating, String sandPRating, String fitchRating,
+			Integer orderNumber) {
+		super();
+		this.id = id;
 		this.moodysRating = moodysRating;
 		this.sandPRating = sandPRating;
 		this.fitchRating = fitchRating;
@@ -68,5 +83,4 @@ public class Rating {
 	public void setOrderNumber(Integer orderNumber) {
 		this.orderNumber = orderNumber;
 	}
-
 }

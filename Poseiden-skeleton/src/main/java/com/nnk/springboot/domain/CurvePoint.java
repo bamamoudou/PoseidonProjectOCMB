@@ -7,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "curvepoint")
@@ -15,18 +16,20 @@ public class CurvePoint {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull
 	private Integer id;
+	@Min(message = "CurveId must not be empty and must contain a number", value = 1)
 	private Integer curveId;
 	private Timestamp asOfDate;
+	@DecimalMin(message = "Term must not be empty and must contain a number", value = "0.01")
 	private Double term;
+	@DecimalMin(message = "Value must not be empty and must contain a number", value = "0.01")
 	private Double value;
 	private Timestamp creationDate;
 
 	public CurvePoint() {
 	}
 
-	public CurvePoint(Integer curveId, Double term, Double value) {
+	public CurvePoint(int curveId, Double term, Double value) {
 		this.curveId = curveId;
 		this.term = term;
 		this.value = value;
@@ -79,5 +82,4 @@ public class CurvePoint {
 	public void setCreationDate(Timestamp creationDate) {
 		this.creationDate = creationDate;
 	}
-
 }

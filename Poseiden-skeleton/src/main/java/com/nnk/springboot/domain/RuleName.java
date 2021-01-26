@@ -5,26 +5,43 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "rulename")
 public class RuleName {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull
 	private Integer id;
+	@NotBlank(message = "Name  must not be empty and must contain a character string")
 	private String name;
+	@NotBlank(message = "Description  must not be empty and must contain a character string")
 	private String description;
+	@NotBlank(message = "Json must not be empty and must contain a character string")
 	private String json;
+	@NotBlank(message = "Template  must not be empty and must contain a character string")
 	private String template;
+	@NotBlank(message = "SqlStr  must not be empty and must contain a character string")
 	private String sqlStr;
+	@NotBlank(message = "SqlPart  must not be empty and must contain a character string")
 	private String sqlPart;
 
 	public RuleName() {
 	}
 
 	public RuleName(String name, String description, String json, String template, String sqlStr, String sqlPart) {
+		this.name = name;
+		this.description = description;
+		this.json = json;
+		this.template = template;
+		this.sqlStr = sqlStr;
+		this.sqlPart = sqlPart;
+	}
+
+	public RuleName(Integer id, String name, String description, String json, String template, String sqlStr,
+			String sqlPart) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.json = json;
@@ -88,5 +105,4 @@ public class RuleName {
 	public void setSqlPart(String sqlPart) {
 		this.sqlPart = sqlPart;
 	}
-
 }

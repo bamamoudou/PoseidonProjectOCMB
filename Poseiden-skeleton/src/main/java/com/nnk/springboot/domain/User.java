@@ -6,6 +6,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +16,7 @@ public class User {
 	private Integer id;
 	@NotBlank(message = "Username is mandatory")
 	private String username;
-	@NotBlank(message = "Password is mandatory")
+	@Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$", message = "The password must be 8 characters including a letter and a number and a capital letter")
 	private String password;
 	@NotBlank(message = "FullName is mandatory")
 	private String fullname;
@@ -26,10 +27,7 @@ public class User {
 
 	}
 
-	public User(@NotBlank(message = "Username is mandatory") String username,
-			@NotBlank(message = "Password is mandatory") String password,
-			@NotBlank(message = "FullName is mandatory") String fullname,
-			@NotBlank(message = "Role is mandatory") String role) {
+	public User(String username, String password, String fullname, String role) {
 		super();
 		this.username = username;
 		this.password = password;

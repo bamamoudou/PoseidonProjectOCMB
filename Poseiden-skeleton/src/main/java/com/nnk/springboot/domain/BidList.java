@@ -7,7 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "bidlist")
@@ -15,10 +16,12 @@ public class BidList {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@NotNull
 	private Integer BidListId;
+	@NotBlank(message = "Account must not be empty and must contain a character string")
 	private String account;
+	@NotBlank(message = "Type must not be empty and must contain a character string")
 	private String type;
+	@DecimalMin(message = "Did Quantity must not be empty and must contain a number", value = "0.01")
 	private Double bidQuantity;
 	private Double askQuantity;
 	private Double bid;
@@ -223,5 +226,4 @@ public class BidList {
 	public void setSide(String side) {
 		this.side = side;
 	}
-
 }

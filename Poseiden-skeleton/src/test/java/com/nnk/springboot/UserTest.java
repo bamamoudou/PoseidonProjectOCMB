@@ -21,12 +21,12 @@ public class UserTest {
 
 	@Test
 	public void userTest() {
-		User user = new User("Username", "password", "fullname", "ROLE");
+		User user = new User("mamoudou", "Test123@password", "Mamoudou Ba", "User");
 
 		// Save
 		user = userRepository.save(user);
 		Assert.assertNotNull(user.getId());
-		Assert.assertTrue(user.getUsername().equals("Username"));
+		Assert.assertTrue(user.getUsername().equals("mamoudou"));
 
 		// Update
 		user.setUsername("Username Update");
