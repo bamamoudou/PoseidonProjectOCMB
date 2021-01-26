@@ -7,7 +7,7 @@ import com.nnk.springboot.domain.BidList;
 /**
  * BidService CRUD manager
  */
-public interface BidService {
+public interface BidListService {
 
 	/**
 	 * save the BidList and return instance save
