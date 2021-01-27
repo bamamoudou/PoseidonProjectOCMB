@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.RatingTests" time="0.887" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.ValidatorTest" time="0.008" tests="6" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -60,5 +60,10 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="ratingTest" classname="com.nnk.springboot.RatingTests" time="0.281"/>
+  <testcase name="bidListInvalidTest" classname="com.nnk.springboot.ValidatorTest" time="0"/>
+  <testcase name="curvePointValidTest" classname="com.nnk.springboot.ValidatorTest" time="0"/>
+  <testcase name="userValidPasswordTest" classname="com.nnk.springboot.ValidatorTest" time="0"/>
+  <testcase name="curvePointInvalidTest" classname="com.nnk.springboot.ValidatorTest" time="0"/>
+  <testcase name="userInvalidPasswordTest" classname="com.nnk.springboot.ValidatorTest" time="0"/>
+  <testcase name="bidListValidTest" classname="com.nnk.springboot.ValidatorTest" time="0"/>
 </testsuite>

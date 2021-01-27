@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.RatingTests" time="0.887" tests="1" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.services.RatingServiceTest" time="0.011" tests="5" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -60,5 +60,9 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="ratingTest" classname="com.nnk.springboot.RatingTests" time="0.281"/>
+  <testcase name="findRatingByIdTest" classname="com.nnk.springboot.services.RatingServiceTest" time="0"/>
+  <testcase name="findRatingByListTest" classname="com.nnk.springboot.services.RatingServiceTest" time="0"/>
+  <testcase name="saveRatingTest" classname="com.nnk.springboot.services.RatingServiceTest" time="0"/>
+  <testcase name="updateRatingTest" classname="com.nnk.springboot.services.RatingServiceTest" time="0"/>
+  <testcase name="deleteRatingByIdTest" classname="com.nnk.springboot.services.RatingServiceTest" time="0"/>
 </testsuite>
