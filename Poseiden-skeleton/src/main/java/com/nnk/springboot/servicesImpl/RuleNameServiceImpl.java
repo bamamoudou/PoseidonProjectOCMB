@@ -30,6 +30,11 @@ public class RuleNameServiceImpl implements RuleNameService {
 	}
 
 	@Override
+	public RuleName findRuleNameByName(String ruleName) {
+		return ruleNameRepository.findRuleNameByName(ruleName);
+	}
+
+	@Override
 	public List<RuleName> findRuleNameByList() {
 		return ruleNameRepository.findAll();
 	}

@@ -44,7 +44,7 @@ public class BidListController {
 		return bidListService.findBidListById(id);
 	}
 
-	@GetMapping("/bidList/add")
+	@PostMapping("/bidList/add")
 	public BidList addBidList(@RequestBody BidList bid) {
 		return bidListService.saveBidList(bid);
 	}

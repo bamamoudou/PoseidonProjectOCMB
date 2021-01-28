@@ -23,6 +23,8 @@ public interface RuleNameService {
 	 * @return
 	 */
 	public RuleName findRuleNameById(int id);
+	
+	public RuleName findRuleNameByName(String ruleName);
 
 	/**
 	 * return list ruleName

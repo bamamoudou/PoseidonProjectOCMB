@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -19,6 +20,7 @@ import com.nnk.springboot.repositories.UserRepository;
 public class UserController {
     @Autowired
     private UserRepository userRepository;
+    
 
     @RequestMapping("/user/list")
     public String home(Model model)
@@ -33,15 +35,14 @@ public class UserController {
     }
 
     @PostMapping("/user/validate")
-    public String validate(@Valid User user, BindingResult result, Model model) {
-        if (!result.hasErrors()) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode(user.getPassword()));
-            userRepository.save(user);
-            model.addAttribute("users", userRepository.findAll());
-            return "redirect:/user/list";
-        }
-        return "user/add";
+    public User validate(@RequestBody User user) {
+//            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+//            user.setPassword(encoder.encode(user.getPassword()));
+             return userRepository.save(user);
+           // model.addAttribute("users", userRepository.findAll());
+            //return "redirect:/user/list";
+//        }
+//        return "user/add";
     }
 
     @GetMapping("/user/update/{id}")
