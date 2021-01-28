@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.BidList;
@@ -39,7 +40,7 @@ public class BidListController {
 	}
 
 	@GetMapping("/bidList/list{id}")
-	public BidList findBidListById(@PathVariable int id) {
+	public BidList findBidListById(@RequestParam int id) {
 		// model.addAttribute("bidLists", bidListRepository.findAll());
 		return bidListService.findBidListById(id);
 	}
@@ -107,11 +108,12 @@ public class BidListController {
 	 * @return bid list
 	 */
 	@DeleteMapping("/bidList/delete/{id}")
-	public void deleteBid(@PathVariable("id") Integer id) {
+	public void deleteBid(@RequestParam Integer id) {
 		BidList bidList = bidListService.findBidListById(id);
 		if (bidList == null) {
 			throw new IllegalArgumentException("Invalid bidList Id:" + id);
+		}else {
+			bidListService.deleteBidListById(id);			
 		}
-		bidListService.deleteBidListById(id);
 	}
 }
