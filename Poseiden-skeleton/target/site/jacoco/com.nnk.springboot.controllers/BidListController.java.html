@@ -7,17 +7,20 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.services.BidListService;
 
 @RestController
-<span class="fc" id="L20">public class BidListController {</span>
+<span class="fc" id="L23">public class BidListController {</span>
 	/**
 	 * Inject Bid service
 	 */
@@ -33,18 +36,18 @@ import com.nnk.springboot.services.BidListService;
 	@GetMapping(&quot;/bidList/list&quot;)
 	public List&lt;BidList&gt; home() {
 		// model.addAttribute(&quot;bidLists&quot;, bidListRepository.findAll());
-<span class="nc" id="L36">		return bidListService.findBidListByList();</span>
+<span class="fc" id="L39">		return bidListService.findBidListByList();</span>
 	}
 
 	@GetMapping(&quot;/bidList/list{id}&quot;)
-	public BidList findBidListById(@PathVariable int id) {
+	public BidList findBidListById(@RequestParam int id) {
 		// model.addAttribute(&quot;bidLists&quot;, bidListRepository.findAll());
-<span class="nc" id="L42">		return bidListService.findBidListById(id);</span>
+<span class="nc" id="L45">		return bidListService.findBidListById(id);</span>
 	}
 
-	@GetMapping(&quot;/bidList/add&quot;)
+	@PostMapping(&quot;/bidList/add&quot;)
 	public BidList addBidList(@RequestBody BidList bid) {
-<span class="nc" id="L47">		return bidListService.saveBidList(bid);</span>
+<span class="nc" id="L50">		return bidListService.saveBidList(bid);</span>
 	}
 
 	/**
@@ -57,12 +60,12 @@ import com.nnk.springboot.services.BidListService;
 	 */
 	@PostMapping(&quot;/bidList/validate&quot;)
 	public String validate(@Valid BidList bid, BindingResult result, Model model) {
-<span class="nc bnc" id="L60" title="All 2 branches missed.">		if (!result.hasErrors()) {</span>
-<span class="nc" id="L61">			bidListService.saveBidList(bid);</span>
-<span class="nc" id="L62">			model.addAttribute(&quot;bidLists&quot;, bidListService.findBidListByList());</span>
-<span class="nc" id="L63">			return &quot;redirect:/bidList/list&quot;;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">		if (!result.hasErrors()) {</span>
+<span class="nc" id="L64">			bidListService.saveBidList(bid);</span>
+<span class="nc" id="L65">			model.addAttribute(&quot;bidLists&quot;, bidListService.findBidListByList());</span>
+<span class="nc" id="L66">			return &quot;redirect:/bidList/list&quot;;</span>
 		}
-<span class="nc" id="L65">		return &quot;bidList/add&quot;;</span>
+<span class="nc" id="L68">		return &quot;bidList/add&quot;;</span>
 	}
 
 	/**
@@ -74,13 +77,13 @@ import com.nnk.springboot.services.BidListService;
 	 */
 	@GetMapping(&quot;/bidList/update/{id}&quot;)
 	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-<span class="nc" id="L77">		BidList bidList = bidListService.findBidListById(id);</span>
-<span class="nc bnc" id="L78" title="All 2 branches missed.">		if (bidList == null) {</span>
-<span class="nc" id="L79">			throw new IllegalArgumentException(&quot;Invalid bidList Id:&quot; + id);</span>
+<span class="nc" id="L80">		BidList bidList = bidListService.findBidListById(id);</span>
+<span class="nc bnc" id="L81" title="All 2 branches missed.">		if (bidList == null) {</span>
+<span class="nc" id="L82">			throw new IllegalArgumentException(&quot;Invalid bidList Id:&quot; + id);</span>
 		}
 
-<span class="nc" id="L82">		model.addAttribute(&quot;bidList&quot;, bidList);</span>
-<span class="nc" id="L83">		return &quot;bidList/update&quot;;</span>
+<span class="nc" id="L85">		model.addAttribute(&quot;bidList&quot;, bidList);</span>
+<span class="nc" id="L86">		return &quot;bidList/update&quot;;</span>
 	}
 
 	/**
@@ -92,9 +95,9 @@ import com.nnk.springboot.services.BidListService;
 	 * @param model
 	 * @return bid list
 	 */
-	@PostMapping(&quot;/bidList/update&quot;)
+	@PutMapping(&quot;/bidList/update&quot;)
 	public BidList updateBid(@RequestBody BidList bidList) {
-<span class="nc" id="L97">		return bidListService.updateBidList(bidList);</span>
+<span class="nc" id="L100">		return bidListService.updateBidList(bidList);</span>
 	}
 
 	/**
@@ -104,13 +107,14 @@ import com.nnk.springboot.services.BidListService;
 	 * @param model
 	 * @return bid list
 	 */
-	@GetMapping(&quot;/bidList/delete/{id}&quot;)
-	public void deleteBid(@PathVariable(&quot;id&quot;) Integer id) {
-<span class="nc" id="L109">		BidList bidList = bidListService.findBidListById(id);</span>
-<span class="nc bnc" id="L110" title="All 2 branches missed.">		if (bidList == null) {</span>
-<span class="nc" id="L111">			throw new IllegalArgumentException(&quot;Invalid bidList Id:&quot; + id);</span>
+	@DeleteMapping(&quot;/bidList/delete/{id}&quot;)
+	public void deleteBid(@RequestParam Integer id) {
+<span class="nc" id="L112">		BidList bidList = bidListService.findBidListById(id);</span>
+<span class="nc bnc" id="L113" title="All 2 branches missed.">		if (bidList == null) {</span>
+<span class="nc" id="L114">			throw new IllegalArgumentException(&quot;Invalid bidList Id:&quot; + id);</span>
+		}else {
+<span class="nc" id="L116">			bidListService.deleteBidListById(id);			</span>
 		}
-<span class="nc" id="L113">		bidListService.deleteBidListById(id);</span>
-<span class="nc" id="L114">	}</span>
+<span class="nc" id="L118">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

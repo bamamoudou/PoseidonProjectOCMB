@@ -22,11 +22,12 @@ public class BidListServiceImpl implements BidListService {
 
 	@Override
 	public BidList findBidListById(int id) {
-		Optional<BidList> bidList = bidListRepository.findById(id);
-		if (bidList == null) {
-			return null;
-		} else
-			return bidList.get();
+	   Optional<BidList> bidListOptional = bidListRepository.findById(id);
+      if (bidListOptional.isPresent()) {
+          BidList bidList = bidListOptional.get();
+          return bidList;
+      }
+      return null;
 	}
 
 	@Override
@@ -44,6 +45,8 @@ public class BidListServiceImpl implements BidListService {
 
 	@Override
 	public void deleteBidListById(int id) {
-		bidListRepository.delete(findBidListById(id));
+		if (bidListRepository.findById(id) != null) {
+			bidListRepository.deleteById(id);
+		}
 	}
 }

@@ -108,6 +108,6 @@ public class BidListServiceTest {
 		bidListService.deleteBidListById(id);
 
 		// assert
-		verify(bidListRepository, times(1)).delete(any(BidList.class));
+		verify(bidListRepository, times(1)).deleteById(id);
 	}
 }

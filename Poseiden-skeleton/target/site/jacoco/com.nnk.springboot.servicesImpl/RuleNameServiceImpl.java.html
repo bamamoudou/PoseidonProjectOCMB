@@ -30,18 +30,23 @@ import com.nnk.springboot.services.RuleNameService;
 	}
 
 	@Override
+	public RuleName findRuleNameByName(String ruleName) {
+<span class="nc" id="L34">		return ruleNameRepository.findRuleNameByName(ruleName);</span>
+	}
+
+	@Override
 	public List&lt;RuleName&gt; findRuleNameByList() {
-<span class="fc" id="L34">		return ruleNameRepository.findAll();</span>
+<span class="fc" id="L39">		return ruleNameRepository.findAll();</span>
 	}
 
 	@Override
 	public RuleName updateRuleName(RuleName ruleName) {
-<span class="fc" id="L39">		return ruleNameRepository.save(ruleName);</span>
+<span class="fc" id="L44">		return ruleNameRepository.save(ruleName);</span>
 	}
 
 	@Override
 	public void deleteRuleNameById(int id) {
-<span class="fc" id="L44">		ruleNameRepository.delete(findRuleNameById(id));</span>
-<span class="fc" id="L45">	}</span>
+<span class="fc" id="L49">		ruleNameRepository.delete(findRuleNameById(id));</span>
+<span class="fc" id="L50">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

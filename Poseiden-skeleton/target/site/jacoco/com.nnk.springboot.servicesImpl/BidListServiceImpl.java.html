@@ -31,17 +31,20 @@ import com.nnk.springboot.services.BidListService;
 
 	@Override
 	public BidList updateBidList(BidList bidList) {
-<span class="fc" id="L34">		return bidListRepository.save(bidList);</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">		if (bidListRepository.findById(bidList.getBidListId()) != null) {</span>
+<span class="fc" id="L35">			return bidListRepository.save(bidList);</span>
+		}
+<span class="nc" id="L37">		return null;</span>
 	}
 
 	@Override
 	public List&lt;BidList&gt; findBidListByList() {
-<span class="fc" id="L39">		return bidListRepository.findAll();</span>
+<span class="fc" id="L42">		return bidListRepository.findAll();</span>
 	}
 
 	@Override
 	public void deleteBidListById(int id) {
-<span class="fc" id="L44">		bidListRepository.delete(findBidListById(id));</span>
-<span class="fc" id="L45">	}</span>
+<span class="fc" id="L47">		bidListRepository.delete(findBidListById(id));</span>
+<span class="fc" id="L48">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

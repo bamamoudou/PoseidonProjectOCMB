@@ -16,7 +16,7 @@ public class BidList {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer BidListId;
+	private Integer bidListId;
 	@NotBlank(message = &quot;Account must not be empty and must contain a character string&quot;)
 	private String account;
 	@NotBlank(message = &quot;Type must not be empty and must contain a character string&quot;)
@@ -52,11 +52,11 @@ public class BidList {
 <span class="fc" id="L52">	}</span>
 
 	public Integer getBidListId() {
-<span class="fc" id="L55">		return BidListId;</span>
+<span class="fc" id="L55">		return bidListId;</span>
 	}
 
 	public void setBidListId(Integer bidListId) {
-<span class="fc" id="L59">		BidListId = bidListId;</span>
+<span class="fc" id="L59">		this.bidListId = bidListId;</span>
 <span class="fc" id="L60">	}</span>
 
 	public String getAccount() {
