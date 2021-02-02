@@ -1,18 +1,28 @@
 package com.nnk.springboot.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.CurvePoint;
-import com.nnk.springboot.repositories.CurvePointRepository;
+import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 
 @RestController
 public class CurveController {
@@ -20,7 +30,9 @@ public class CurveController {
 	 * Inject Curve Point service
 	 */
 	@Autowired
-	private CurvePointRepository curvePointRepository;
+	private CurveServiceImpl curveService;
+
+	private static final Logger LOGGER = LoggerFactory.getLogger(CurveController.class);
 
 	/**
 	 * Find all Curve Point, add to model
@@ -28,15 +40,26 @@ public class CurveController {
 	 * @param model
 	 * @return curve point list
 	 */
-	@RequestMapping("/curvePoint/list")
-	public String home(Model model) {
-		model.addAttribute("curvePoints", curvePointRepository.findAll());
-		return "curvePoint/list";
+	@GetMapping("/curvePoint/list")
+	public List<CurvePoint> home() {
+		return curveService.findCurvePointByList();
 	}
 
-	@GetMapping("/curvePoint/add")
-	public String addBidForm(CurvePoint bid) {
-		return "curvePoint/add";
+	@PostMapping("/curvePoint/add")
+	public ResponseEntity<CurvePoint> addCurvePoint(@RequestBody CurvePoint curvePoint) {
+		return new ResponseEntity<CurvePoint>(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);
+	}
+
+	/**
+	 * Get CurvePoint by Id and to model then show to the form
+	 * 
+	 * @param id
+	 * @param model
+	 * @return
+	 */
+	@GetMapping("/curvePoint/{id}")
+	public CurvePoint getCurvePointById(@PathVariable("id") Integer id) {
+		return curveService.findCurvePointById(id);
 	}
 
 	/**
@@ -50,26 +73,11 @@ public class CurveController {
 	@PostMapping("/curvePoint/validate")
 	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
 		if (!result.hasErrors()) {
-			curvePointRepository.save(curvePoint);
-			model.addAttribute("curvePoints", curvePointRepository.findAll());
+			curveService.saveCurvePoint(curvePoint);
+
 			return "redirect:/curvePoint/list";
 		}
 		return "curvePoint/add";
-	}
-
-	/**
-	 * Get CurvePoint by Id and to model then show to the form
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/curvePoint/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		CurvePoint curvePoint = curvePointRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
-		model.addAttribute("curvePoint", curvePoint);
-		return "curvePoint/update";
 	}
 
 	/**
@@ -81,16 +89,9 @@ public class CurveController {
 	 * @param model
 	 * @return Curve list
 	 */
-	@PostMapping("/curvePoint/update/{id}")
-	public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint, BindingResult result,
-			Model model) {
-		if (!result.hasErrors()) {
-			curvePoint.setId(id);
-			curvePointRepository.save(curvePoint);
-			model.addAttribute("curvePoints", curvePointRepository.findAll());
-			return "redirect:/curvePoint/list";
-		}
-		return "redirect:/curvePoint/list";
+	@PutMapping("/curvePoint/update")
+	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
+		return curveService.updateCurvePoint(curvePoint);
 	}
 
 	/**
@@ -100,12 +101,15 @@ public class CurveController {
 	 * @param model
 	 * @return Curve list
 	 */
-	@GetMapping("/curvePoint/delete/{id}")
-	public String deleteBid(@PathVariable("id") Integer id, Model model) {
-		CurvePoint curvePoint = curvePointRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint Id:" + id));
-		curvePointRepository.delete(curvePoint);
-		model.addAttribute("curvePoints", curvePointRepository.findAll());
-		return "redirect:/curvePoint/list";
+	@DeleteMapping("/curvePoint/delete/{id}")
+	public void deleteCurve(@PathVariable Integer id, HttpServletResponse response) {
+		Optional<CurvePoint> bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));
+		if (bidOptional.isPresent()) {
+			LOGGER.info("delete, SUCCES");
+			response.setStatus(200);
+			curveService.deleteCurvePointById(id);
+		} else {
+			LOGGER.error("Delete, ERROR");
+		}
 	}
 }
