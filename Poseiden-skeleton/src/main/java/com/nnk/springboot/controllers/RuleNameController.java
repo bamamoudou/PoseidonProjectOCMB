@@ -1,55 +1,82 @@
 package com.nnk.springboot.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.RuleName;
+import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 
 @RestController
 public class RuleNameController {
-	// TODO: Inject RuleName service
+	/**
+	 * Inject RuleName service
+	 */
+	@Autowired
+	private RuleNameServiceImpl ruleNameService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(RuleNameController.class);
 
-	@RequestMapping("/ruleName/list")
-	public String home(Model model) {
-		// TODO: find all RuleName, add to model
-		return "ruleName/list";
+	/**
+	 * find all RuleName, add to model
+	 * 
+	 * @return List of ruleName
+	 */
+	@GetMapping("/ruleName/list")
+	public List<RuleName> home() {
+		return ruleNameService.findRuleNameByList();
 	}
 
-	@GetMapping("/ruleName/add")
-	public String addRuleForm(RuleName bid) {
-		return "ruleName/add";
+	/**
+	 * Check data valid and save to db
+	 * 
+	 * @param ruleName
+	 * @return rule name added
+	 */
+	@PostMapping("/ruleName/add")
+	public ResponseEntity<RuleName> addRule(@Valid @RequestBody RuleName ruleName) {
+		return new ResponseEntity<RuleName>(ruleNameService.saveRuleName(ruleName), HttpStatus.CREATED);
 	}
 
-	@PostMapping("/ruleName/validate")
-	public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return RuleName list
-		return "ruleName/add";
+	/**
+	 * Check required fields, if valid call service to update RuleName
+	 * 
+	 * @param ruleName
+	 * @return rule name updated
+	 */
+	@PutMapping("/ruleName/update")
+	public RuleName updateRuleName(@Valid @RequestBody RuleName ruleName) {
+		return ruleNameService.updateRuleName(ruleName);
 	}
 
-	@GetMapping("/ruleName/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get RuleName by Id and to model then show to the form
-		return "ruleName/update";
-	}
-
-	@PostMapping("/ruleName/update/{id}")
-	public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName, BindingResult result,
-			Model model) {
-		// TODO: check required fields, if valid call service to update RuleName and
-		// return RuleName list
-		return "redirect:/ruleName/list";
-	}
-
-	@GetMapping("/ruleName/delete/{id}")
-	public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
-		// TODO: Find RuleName by Id and delete the RuleName, return to Rule list
-		return "redirect:/ruleName/list";
+	/**
+	 * Find RuleName by Id and delete the RuleName
+	 * 
+	 * @param id
+	 */
+	@DeleteMapping("/ruleName/delete/{id}")
+	public void deleteRuleName(@PathVariable Integer id, HttpServletResponse response) {
+		Optional<RuleName> bidOptional = Optional.ofNullable(ruleNameService.findRuleNameById(id));
+		if (bidOptional.isPresent()) {
+			LOGGER.info("delete, SUCCES");
+			response.setStatus(200);
+			ruleNameService.deleteRuleNameById(id);
+		} else {
+			LOGGER.error("Delete, ERROR");
+		}
 	}
 }
