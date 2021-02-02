@@ -29,10 +29,11 @@ public class RuleNameController {
 	 */
 	@Autowired
 	private RuleNameServiceImpl ruleNameService;
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(RuleNameController.class);
 
 	/**
-	 * find all RuleName, add to model
+	 * find all RuleName
 	 * 
 	 * @return List of ruleName
 	 */

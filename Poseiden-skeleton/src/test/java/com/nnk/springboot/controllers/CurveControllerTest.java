@@ -29,7 +29,6 @@ import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 @RunWith(SpringRunner.class)
 @WebMvcTest(CurveController.class)
 public class CurveControllerTest {
-
 	@Autowired
 	private MockMvc mockMvc;
 	@Autowired
@@ -53,7 +52,6 @@ public class CurveControllerTest {
 	public void findCurPointByIdTest() throws Exception {
 		when(curveService.findCurvePointById(1)).thenReturn(curve);
 		mockMvc.perform(get("/curvePoint/ + 1")).andExpect(status().is2xxSuccessful());
-
 	}
 
 	@Test
@@ -78,7 +76,6 @@ public class CurveControllerTest {
 		mockMvc.perform(
 				put("/curvePoint/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(curve)))
 				.andExpect(status().is2xxSuccessful());
-
 	}
 
 	@Test

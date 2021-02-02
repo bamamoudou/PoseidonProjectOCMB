@@ -11,8 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,9 +33,8 @@ public class CurveController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(CurveController.class);
 
 	/**
-	 * Find all Curve Point, add to model
+	 * Find all Curve Point
 	 * 
-	 * @param model
 	 * @return curve point list
 	 */
 	@GetMapping("/curvePoint/list")
@@ -45,49 +42,33 @@ public class CurveController {
 		return curveService.findCurvePointByList();
 	}
 
-	@PostMapping("/curvePoint/add")
-	public ResponseEntity<CurvePoint> addCurvePoint(@RequestBody CurvePoint curvePoint) {
-		return new ResponseEntity<CurvePoint>(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);
-	}
-
-	/**
-	 * Get CurvePoint by Id and to model then show to the form
-	 * 
-	 * @param id
-	 * @param model
-	 * @return
-	 */
-	@GetMapping("/curvePoint/{id}")
-	public CurvePoint getCurvePointById(@PathVariable("id") Integer id) {
-		return curveService.findCurvePointById(id);
-	}
-
 	/**
 	 * Check data valid and save to db
 	 * 
 	 * @param curvePoint
-	 * @param result
-	 * @param model
-	 * @return Curve list
+	 * @return Curve added
 	 */
-	@PostMapping("/curvePoint/validate")
-	public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-		if (!result.hasErrors()) {
-			curveService.saveCurvePoint(curvePoint);
+	@PostMapping("/curvePoint/add")
+	public ResponseEntity<CurvePoint> addCurvePoint(@Valid @RequestBody CurvePoint curvePoint) {
+		return new ResponseEntity<CurvePoint>(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);
+	}
 
-			return "redirect:/curvePoint/list";
-		}
-		return "curvePoint/add";
+	/**
+	 * Get CurvePoint by Id
+	 * 
+	 * @param id
+	 * @return Curve found
+	 */
+	@GetMapping("/curvePoint/{id}")
+	public CurvePoint getCurvePointById(@PathVariable Integer id) {
+		return curveService.findCurvePointById(id);
 	}
 
 	/**
 	 * Check required fields, if valid call service to update Curve
 	 * 
-	 * @param id
 	 * @param curvePoint
-	 * @param result
-	 * @param model
-	 * @return Curve list
+	 * @return Curve updated
 	 */
 	@PutMapping("/curvePoint/update")
 	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
@@ -96,10 +77,6 @@ public class CurveController {
 
 	/**
 	 * Find Curve by Id and delete the Curve
-	 * 
-	 * @param id
-	 * @param model
-	 * @return Curve list
 	 */
 	@DeleteMapping("/curvePoint/delete/{id}")
 	public void deleteCurve(@PathVariable Integer id, HttpServletResponse response) {

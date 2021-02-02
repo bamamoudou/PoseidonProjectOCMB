@@ -52,7 +52,6 @@ public class RatingControllerTest {
 	public void findRatingByIdTest() throws Exception {
 		when(ratingService.findRatingById(1)).thenReturn(rating);
 		mockMvc.perform(get("/rating/ + 1")).andExpect(status().is2xxSuccessful());
-
 	}
 
 	@Test
@@ -77,7 +76,6 @@ public class RatingControllerTest {
 		mockMvc.perform(
 				put("/rating/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(rating)))
 				.andExpect(status().is2xxSuccessful());
-
 	}
 
 	@Test

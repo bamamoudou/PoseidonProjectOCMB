@@ -33,9 +33,13 @@ public class RatingController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(RatingController.class);
 
+	/**
+	 * find all Rating, add to model
+	 * 
+	 * @return Rating list
+	 */
 	@RequestMapping("/rating/list")
 	public List<Rating> home() {
-		// find all Rating, add to model
 		return ratingService.findRatingByList();
 	}
 
@@ -43,7 +47,7 @@ public class RatingController {
 	 * Check data valid and save to db
 	 * 
 	 * @param rating
-	 * @return rating
+	 * @return rating added
 	 */
 	@PostMapping("/rating/add")
 	public ResponseEntity<Rating> addRating(@Valid @RequestBody Rating rating) {
@@ -54,7 +58,7 @@ public class RatingController {
 	 * Get Rating by Id
 	 * 
 	 * @param id
-	 * @return Rating
+	 * @return Rating found
 	 */
 	@GetMapping("/rating/{id}")
 	public Rating getRatingById(@PathVariable Integer id) {
@@ -65,7 +69,7 @@ public class RatingController {
 	 * Check required fields, if valid call service to update Rating
 	 * 
 	 * @param rating
-	 * @return Rating
+	 * @return Rating update
 	 */
 	@PutMapping("/rating/update")
 	public Rating updateRating(@Valid @RequestBody Rating rating) {
@@ -74,8 +78,6 @@ public class RatingController {
 
 	/**
 	 * Find Rating by Id and delete the Rating.
-	 * 
-	 * @param id
 	 */
 	@DeleteMapping("/rating/delete/{id}")
 	public void deleteRating(@PathVariable Integer id, HttpServletResponse response) {

@@ -26,12 +26,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.servicesImpl.BidListServiceImpl;
 
-//@SpringBootTest
 @RunWith(SpringRunner.class)
 @WebMvcTest(BidListController.class)
-//@AutoConfigureMockMvc
 public class BidListControllerTest {
-
 	@Autowired
 	private MockMvc mockMvc;
 	@Autowired
@@ -80,7 +77,6 @@ public class BidListControllerTest {
 		mockMvc.perform(
 				put("/bidList/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(bidList)))
 				.andExpect(status().is2xxSuccessful());
-
 	}
 
 	@Test
