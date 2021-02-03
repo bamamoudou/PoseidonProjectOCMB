@@ -1,54 +1,93 @@
 package com.nnk.springboot.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 
 @RestController
 public class TradeController {
-	// TODO: Inject Trade service
+	/**
+	 * Inject Trade service
+	 */
+	@Autowired
+	private TradeServiceImpl tradeService;
+	private static final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);
 
-	@RequestMapping("/trade/list")
-	public String home(Model model) {
-		// TODO: find all Trade, add to model
-		return "trade/list";
+	/**
+	 * find all Trades
+	 * 
+	 * @return list of trades
+	 */
+	@GetMapping("/trade/list")
+	public List<Trade> home() {
+		return tradeService.findTradeBylist();
 	}
 
-	@GetMapping("/trade/add")
-	public String addUser(Trade bid) {
-		return "trade/add";
+	/**
+	 * Check data valid and save to db
+	 * 
+	 * @param trade
+	 * @return Trade added
+	 */
+	@PostMapping("/trade/add")
+	public ResponseEntity<Trade> addTrade(@Valid @RequestBody Trade trade) {
+		return new ResponseEntity<Trade>(tradeService.saveTrade(trade), HttpStatus.CREATED);
 	}
 
-	@PostMapping("/trade/validate")
-	public String validate(@Valid Trade trade, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return Trade list
-		return "trade/add";
+	/**
+	 * Get Trade by Id
+	 * 
+	 * @param id
+	 * @return Trade found
+	 */
+	@GetMapping("/trade/{id}")
+	public Trade getTrade(@PathVariable Integer id) {
+		return tradeService.findTradeById(id);
 	}
 
-	@GetMapping("/trade/update/{id}")
-	public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-		// TODO: get Trade by Id and to model then show to the form
-		return "trade/update";
+	/**
+	 * Check required fields, if valid call service to update Trade
+	 * 
+	 * @param trade
+	 * @return Trade updated
+	 */
+	@PutMapping("/trade/update")
+	public Trade updateTrade(@Valid @RequestBody Trade trade) {
+		return tradeService.updateTrade(trade);
 	}
 
-	@PostMapping("/trade/update/{id}")
-	public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade, BindingResult result, Model model) {
-		// TODO: check required fields, if valid call service to update Trade and return
-		// Trade list
-		return "redirect:/trade/list";
-	}
-
-	@GetMapping("/trade/delete/{id}")
-	public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-		// TODO: Find Trade by Id and delete the Trade, return to Trade list
-		return "redirect:/trade/list";
+	/**
+	 * Find Trade by Id and delete the Trade
+	 * 
+	 * @param id
+	 */
+	@DeleteMapping("/trade/delete/{id}")
+	public void deleteTrade(@PathVariable Integer id, HttpServletResponse response) {
+		Optional<Trade> bidOptional = Optional.ofNullable(tradeService.findTradeById(id));
+		if (bidOptional.isPresent()) {
+			LOGGER.info("delete, SUCCES");
+			response.setStatus(200);
+			tradeService.deleteTradeById(id);
+		} else {
+			LOGGER.error("Delete, ERROR");
+		}
 	}
 }
