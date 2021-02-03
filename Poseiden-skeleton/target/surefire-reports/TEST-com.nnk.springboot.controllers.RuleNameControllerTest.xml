@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.services.TradeServiceTest" time="0.008" tests="5" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="com.nnk.springboot.controllers.RuleNameControllerTest" time="2.347" tests="4" errors="0" skipped="0" failures="0">
   <properties>
     <property name="sun.desktop" value="windows"/>
     <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
@@ -60,9 +60,8 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="52.0"/>
   </properties>
-  <testcase name="saveTradeTest" classname="com.nnk.springboot.services.TradeServiceTest" time="0"/>
-  <testcase name="findTradeByIdTest" classname="com.nnk.springboot.services.TradeServiceTest" time="0"/>
-  <testcase name="findTradeByListTest" classname="com.nnk.springboot.services.TradeServiceTest" time="0"/>
-  <testcase name="deleteRatingByIdTest" classname="com.nnk.springboot.services.TradeServiceTest" time="0"/>
-  <testcase name="updateTradeTest" classname="com.nnk.springboot.services.TradeServiceTest" time="0.001"/>
+  <testcase name="deleteRuleTest" classname="com.nnk.springboot.controllers.RuleNameControllerTest" time="0.096"/>
+  <testcase name="addRuleTest" classname="com.nnk.springboot.controllers.RuleNameControllerTest" time="0.072"/>
+  <testcase name="findRuleByListTest" classname="com.nnk.springboot.controllers.RuleNameControllerTest" time="0.072"/>
+  <testcase name="updateRuleTest" classname="com.nnk.springboot.controllers.RuleNameControllerTest" time="0.083"/>
 </testsuite>

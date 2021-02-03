@@ -22,29 +22,32 @@ import com.nnk.springboot.services.BidListService;
 
 	@Override
 	public BidList findBidListById(int id) {
-<span class="fc" id="L25">		Optional&lt;BidList&gt; bidList = bidListRepository.findById(id);</span>
-<span class="pc bpc" id="L26" title="1 of 2 branches missed.">		if (bidList == null) {</span>
-<span class="nc" id="L27">			return null;</span>
-		} else
-<span class="fc" id="L29">			return bidList.get();</span>
+<span class="fc" id="L25">	   Optional&lt;BidList&gt; bidListOptional = bidListRepository.findById(id);</span>
+<span class="pc bpc" id="L26" title="1 of 2 branches missed.">      if (bidListOptional.isPresent()) {</span>
+<span class="fc" id="L27">          BidList bidList = bidListOptional.get();</span>
+<span class="fc" id="L28">          return bidList;</span>
+      }
+<span class="nc" id="L30">      return null;</span>
 	}
 
 	@Override
 	public BidList updateBidList(BidList bidList) {
-<span class="pc bpc" id="L34" title="1 of 2 branches missed.">		if (bidListRepository.findById(bidList.getBidListId()) != null) {</span>
-<span class="fc" id="L35">			return bidListRepository.save(bidList);</span>
+<span class="pc bpc" id="L35" title="1 of 2 branches missed.">		if (bidListRepository.findById(bidList.getBidListId()) != null) {</span>
+<span class="fc" id="L36">			return bidListRepository.save(bidList);</span>
 		}
-<span class="nc" id="L37">		return null;</span>
+<span class="nc" id="L38">		return null;</span>
 	}
 
 	@Override
 	public List&lt;BidList&gt; findBidListByList() {
-<span class="fc" id="L42">		return bidListRepository.findAll();</span>
+<span class="fc" id="L43">		return bidListRepository.findAll();</span>
 	}
 
 	@Override
 	public void deleteBidListById(int id) {
-<span class="fc" id="L47">		bidListRepository.delete(findBidListById(id));</span>
-<span class="fc" id="L48">	}</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">		if (bidListRepository.findById(id) != null) {</span>
+<span class="fc" id="L49">			bidListRepository.deleteById(id);</span>
+		}
+<span class="fc" id="L51">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
