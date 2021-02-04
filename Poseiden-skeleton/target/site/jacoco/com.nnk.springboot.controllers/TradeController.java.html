@@ -1,55 +1,94 @@
 <?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>TradeController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.controllers</a> &gt; <span class="el_source">TradeController.java</span></div><h1>TradeController.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.controllers;
 
+import java.util.List;
+import java.util.Optional;
+
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.Trade;
+import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 
 @RestController
-<span class="fc" id="L16">public class TradeController {</span>
-	// TODO: Inject Trade service
+<span class="fc" id="L26">public class TradeController {</span>
+	/**
+	 * Inject Trade service
+	 */
+	@Autowired
+	private TradeServiceImpl tradeService;
+<span class="fc" id="L32">	private static final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);</span>
 
-	@RequestMapping(&quot;/trade/list&quot;)
-	public String home(Model model) {
-		// TODO: find all Trade, add to model
-<span class="nc" id="L22">		return &quot;trade/list&quot;;</span>
+	/**
+	 * find all Trades
+	 * 
+	 * @return list of trades
+	 */
+	@GetMapping(&quot;/trade/list&quot;)
+	public List&lt;Trade&gt; home() {
+<span class="fc" id="L41">		return tradeService.findTradeBylist();</span>
 	}
 
-	@GetMapping(&quot;/trade/add&quot;)
-	public String addUser(Trade bid) {
-<span class="nc" id="L27">		return &quot;trade/add&quot;;</span>
+	/**
+	 * Check data valid and save to db
+	 * 
+	 * @param trade
+	 * @return Trade added
+	 */
+	@PostMapping(&quot;/trade/add&quot;)
+	public ResponseEntity&lt;Trade&gt; addTrade(@Valid @RequestBody Trade trade) {
+<span class="fc" id="L52">		return new ResponseEntity&lt;Trade&gt;(tradeService.saveTrade(trade), HttpStatus.CREATED);</span>
 	}
 
-	@PostMapping(&quot;/trade/validate&quot;)
-	public String validate(@Valid Trade trade, BindingResult result, Model model) {
-		// TODO: check data valid and save to db, after saving return Trade list
-<span class="nc" id="L33">		return &quot;trade/add&quot;;</span>
+	/**
+	 * Get Trade by Id
+	 * 
+	 * @param id
+	 * @return Trade found
+	 */
+	@GetMapping(&quot;/trade/{id}&quot;)
+	public Trade getTrade(@PathVariable Integer id) {
+<span class="fc" id="L63">		return tradeService.findTradeById(id);</span>
 	}
 
-	@GetMapping(&quot;/trade/update/{id}&quot;)
-	public String showUpdateForm(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-		// TODO: get Trade by Id and to model then show to the form
-<span class="nc" id="L39">		return &quot;trade/update&quot;;</span>
+	/**
+	 * Check required fields, if valid call service to update Trade
+	 * 
+	 * @param trade
+	 * @return Trade updated
+	 */
+	@PutMapping(&quot;/trade/update&quot;)
+	public Trade updateTrade(@Valid @RequestBody Trade trade) {
+<span class="fc" id="L74">		return tradeService.updateTrade(trade);</span>
 	}
 
-	@PostMapping(&quot;/trade/update/{id}&quot;)
-	public String updateTrade(@PathVariable(&quot;id&quot;) Integer id, @Valid Trade trade, BindingResult result, Model model) {
-		// TODO: check required fields, if valid call service to update Trade and return
-		// Trade list
-<span class="nc" id="L46">		return &quot;redirect:/trade/list&quot;;</span>
-	}
-
-	@GetMapping(&quot;/trade/delete/{id}&quot;)
-	public String deleteTrade(@PathVariable(&quot;id&quot;) Integer id, Model model) {
-		// TODO: Find Trade by Id and delete the Trade, return to Trade list
-<span class="nc" id="L52">		return &quot;redirect:/trade/list&quot;;</span>
-	}
+	/**
+	 * Find Trade by Id and delete the Trade
+	 * 
+	 * @param id
+	 */
+	@DeleteMapping(&quot;/trade/delete/{id}&quot;)
+	public void deleteTrade(@PathVariable Integer id, HttpServletResponse response) {
+<span class="fc" id="L84">		Optional&lt;Trade&gt; bidOptional = Optional.ofNullable(tradeService.findTradeById(id));</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L86">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L87">			response.setStatus(200);</span>
+<span class="nc" id="L88">			tradeService.deleteTradeById(id);</span>
+<span class="nc" id="L89">		} else {</span>
+<span class="fc" id="L90">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+		}
+<span class="fc" id="L92">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

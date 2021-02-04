@@ -15,14 +15,14 @@ import com.nnk.springboot.repositories.UserRepository;
 	@Autowired
 	private UserRepository userRepository;
 
-	@GetMapping(&quot;login&quot;)
+	@GetMapping(&quot;/login&quot;)
 	public ModelAndView login() {
 <span class="nc" id="L20">		ModelAndView mav = new ModelAndView();</span>
 <span class="nc" id="L21">		mav.setViewName(&quot;login&quot;);</span>
 <span class="nc" id="L22">		return mav;</span>
 	}
 
-	@GetMapping(&quot;secure/article-details&quot;)
+	@GetMapping(&quot;/secure/article-details&quot;)
 	public ModelAndView getAllUserArticles() {
 <span class="nc" id="L27">		ModelAndView mav = new ModelAndView();</span>
 <span class="nc" id="L28">		mav.addObject(&quot;users&quot;, userRepository.findAll());</span>
@@ -30,7 +30,7 @@ import com.nnk.springboot.repositories.UserRepository;
 <span class="nc" id="L30">		return mav;</span>
 	}
 
-	@GetMapping(&quot;error&quot;)
+	@GetMapping(&quot;/error&quot;)
 	public ModelAndView error() {
 <span class="nc" id="L35">		ModelAndView mav = new ModelAndView();</span>
 <span class="nc" id="L36">		String errorMessage = &quot;You are not authorized for the requested data.&quot;;</span>
