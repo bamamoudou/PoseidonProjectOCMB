@@ -15,12 +15,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.servicesImpl.MyUserDetailsService;
+import com.nnk.springboot.servicesImpl.UserServiceImpl;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @RunWith(MockitoJUnitRunner.class)
 public class MyUserDetailsServiceTest {
 	@Mock
-   private UserService userServiceMock;
+   private UserServiceImpl userServiceMock;
 
    @InjectMocks
    private MyUserDetailsService myUserDetailsService;

@@ -8,15 +8,16 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.services.UserService;
 
+@Service
 public class MyUserDetailsService implements UserDetailsService {
-	 private UserService userService;
+	 private UserServiceImpl userService;
 
     @Autowired
-    public MyUserDetailsService(UserService userService) {
+    public MyUserDetailsService(UserServiceImpl userService) {
         this.userService = userService;
     }
 

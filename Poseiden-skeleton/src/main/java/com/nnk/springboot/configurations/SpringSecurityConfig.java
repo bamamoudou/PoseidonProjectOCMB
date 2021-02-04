@@ -1,65 +1,35 @@
 package com.nnk.springboot.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.nnk.springboot.servicesImpl.MyUserDetailsService;
+
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled=true)
 public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
-
 	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
-//	@Autowired
-//	private UserProfilDetailsServiceImpl userProfilDetailsService;
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		//auth.userDetailsService(userProfilDetailsService).passwordEncoder(bCryptPasswordEncoder);
-	}
+	private MyUserDetailsService userDetailsService;
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		 http
-       .authorizeRequests()
-       .antMatchers("/").permitAll()
-       .antMatchers("/login**").permitAll()
-       .antMatchers("/perform_login").permitAll()
-       .antMatchers("/user/validate").permitAll()
-       .antMatchers("/admin**").hasRole("Admin")
-       .antMatchers("/user**").hasAnyRole("Admin", "User")
-       .and().csrf().disable()
-       .httpBasic()
-       .and()
-       .formLogin()
-       .loginPage("/login")
-       .loginProcessingUrl("/perform_login")
-       .usernameParameter("username")
-       .passwordParameter("password")
-       .defaultSuccessUrl("/home.html", true)
-       .failureUrl("/login?error=true")
-       .and()
-       .logout()
-       .logoutSuccessUrl("/login?logout=true")
-       .and()
-       .exceptionHandling().accessDeniedPage("/403");
+		http.authorizeRequests().antMatchers("/user/**").hasAuthority("ADMIN")
+				.antMatchers("/bidList/**", "/rating/**", "/ruleName/**", "/trade/**", "/curvePoint/**")
+				.hasAnyAuthority("ADMIN", "USER").antMatchers("/**").authenticated().and().formLogin()
+				.defaultSuccessUrl("/bidList/list", true).and().logout().logoutUrl("/app-logout").logoutSuccessUrl("/login")
+				.and().exceptionHandling().accessDeniedPage("/app/error");
 	}
 
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		// web.ignoring().antMatchers("/resources/**", "/static/**", "/css/**",
-		// "/images/**");
-	}
-
-	@Bean
-	public BCryptPasswordEncoder bCryptPasswordEncoder() {
-		return new BCryptPasswordEncoder();
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 	}
 }

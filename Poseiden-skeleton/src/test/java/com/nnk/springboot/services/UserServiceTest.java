@@ -1,11 +1,16 @@
 package com.nnk.springboot.services;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Before;
@@ -14,6 +19,9 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.repositories.UserRepository;
@@ -37,6 +45,46 @@ public class UserServiceTest {
 		user.setPassword("Test123@password");
 		user.setFullname("Mamoudou Ba");
 		user.setRole("User");
+	}
+
+	@Test
+	public void FindUserFromAuthIfuserNotLoggedInAndNullReturned() {
+		// arrange
+		AnonymousAuthenticationToken authentication = mock(AnonymousAuthenticationToken.class);
+		SecurityContext securityContext = mock(SecurityContext.class);
+		SecurityContextHolder.setContext(securityContext);
+
+		// act
+		User result = userService.getUserFromAuth(authentication);
+
+		// assert
+		assertNull(result);
+	}
+
+	@Test
+	public void findAll_userExists_usersReturned() {
+		// arrange
+		List<User> users = new ArrayList<>();
+		users.add(user);
+
+		when(userRepository.findAll()).thenReturn(users);
+
+		// act
+		List<User> listResult = userService.findAllUsers();
+
+		// assert
+		assertTrue(listResult.size() > 0);
+	}
+
+	@Test
+	public void findAll_userDoesNotExists_noUsersReturned() {
+		// arrange
+
+		// act
+		List<User> listResult = userService.findAllUsers();
+
+		// assert
+		assertTrue(listResult.size() == 0);
 	}
 
 	@Test
@@ -81,14 +129,14 @@ public class UserServiceTest {
 	public void updateUser() {
 		// arrange
 		user.setUsername("doro");
-		when(userRepository.save(any())).thenReturn(user);
+		when(userRepository.findById(1)).thenReturn(java.util.Optional.ofNullable(user));
 
 		// act
-		User result = userService.updateUser(user);
+		userService.updateUser(user);
 
 		// assert
-		assertThat(result.getUsername()).isEqualTo("doro");
 		verify(userRepository, times(1)).save(any(User.class));
+		assertThat(user.getUsername()).isEqualTo("doro");
 	}
 
 	@Test
