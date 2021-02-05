@@ -60,12 +60,12 @@ import com.nnk.springboot.services.UserService;
 
 	@Override
 	public User updateUser(User user) {
-<span class="fc" id="L63">		 User updatedUser = findUserById(user.getId());</span>
-<span class="fc" id="L64">       BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
-<span class="fc" id="L65">       updatedUser.setPassword(encoder.encode(user.getPassword()));</span>
-<span class="fc" id="L66">       updatedUser.setFullname(user.getFullname());</span>
-<span class="fc" id="L67">       updatedUser.setUsername(user.getUsername());</span>
-<span class="fc" id="L68">       updatedUser.setRole(user.getRole());</span>
+<span class="fc" id="L63">		User updatedUser = findUserById(user.getId());</span>
+<span class="fc" id="L64">		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L65">		updatedUser.setPassword(encoder.encode(user.getPassword()));</span>
+<span class="fc" id="L66">		updatedUser.setFullname(user.getFullname());</span>
+<span class="fc" id="L67">		updatedUser.setUsername(user.getUsername());</span>
+<span class="fc" id="L68">		updatedUser.setRole(user.getRole());</span>
 <span class="fc" id="L69">		return userRepository.save(user);</span>
 	}
 
