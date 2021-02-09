@@ -1,6 +1,7 @@
 package com.nnk.springboot.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -8,6 +9,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.nnk.springboot.servicesImpl.MyUserDetailsService;
 
@@ -26,10 +28,21 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 				.defaultSuccessUrl("/bidList/list", true).and().logout().logoutUrl("/app-logout").logoutSuccessUrl("/login")
 				.and().exceptionHandling().accessDeniedPage("/app/error");
 	}
-
-	@Autowired
-	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.inMemoryAuthentication().withUser("admin").password(encoder().encode("Test123@Password")).roles("ADMIN")
+				.and().withUser("user").password(encoder().encode("Test123@Password")).roles("USER");
+//		auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
 	}
+
+   @Bean
+   public PasswordEncoder encoder() {
+		return new BCryptPasswordEncoder();
+   }
+//	@Autowired
+//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+//	}
 }
