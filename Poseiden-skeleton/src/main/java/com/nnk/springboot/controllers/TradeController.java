@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 
 @RestController
+@RequestMapping("/api/trade")
 public class TradeController {
 	/**
 	 * Inject Trade service
@@ -36,7 +38,7 @@ public class TradeController {
 	 * 
 	 * @return list of trades
 	 */
-	@GetMapping("/trade/list")
+	@GetMapping("/list")
 	public List<Trade> home() {
 		return tradeService.findTradeBylist();
 	}
@@ -47,7 +49,7 @@ public class TradeController {
 	 * @param trade
 	 * @return Trade added
 	 */
-	@PostMapping("/trade/add")
+	@PostMapping("/add")
 	public ResponseEntity<Trade> addTrade(@Valid @RequestBody Trade trade) {
 		return new ResponseEntity<Trade>(tradeService.saveTrade(trade), HttpStatus.CREATED);
 	}
@@ -58,7 +60,7 @@ public class TradeController {
 	 * @param id
 	 * @return Trade found
 	 */
-	@GetMapping("/trade/{id}")
+	@GetMapping("/{id}")
 	public Trade getTrade(@PathVariable Integer id) {
 		return tradeService.findTradeById(id);
 	}
@@ -69,7 +71,7 @@ public class TradeController {
 	 * @param trade
 	 * @return Trade updated
 	 */
-	@PutMapping("/trade/update")
+	@PutMapping("/update")
 	public Trade updateTrade(@Valid @RequestBody Trade trade) {
 		return tradeService.updateTrade(trade);
 	}
@@ -79,7 +81,7 @@ public class TradeController {
 	 * 
 	 * @param id
 	 */
-	@DeleteMapping("/trade/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteTrade(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<Trade> bidOptional = Optional.ofNullable(tradeService.findTradeById(id));
 		if (bidOptional.isPresent()) {

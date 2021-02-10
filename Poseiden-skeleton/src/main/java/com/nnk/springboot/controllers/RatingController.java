@@ -24,6 +24,7 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.servicesImpl.RatingServiceImpl;
 
 @RestController
+@RequestMapping("/api/rating")
 public class RatingController {
 	/**
 	 * Inject Rating service
@@ -38,7 +39,7 @@ public class RatingController {
 	 * 
 	 * @return Rating list
 	 */
-	@RequestMapping("/rating/list")
+	@RequestMapping("/list")
 	public List<Rating> home() {
 		return ratingService.findRatingByList();
 	}
@@ -49,7 +50,7 @@ public class RatingController {
 	 * @param rating
 	 * @return rating added
 	 */
-	@PostMapping("/rating/add")
+	@PostMapping("/add")
 	public ResponseEntity<Rating> addRating(@Valid @RequestBody Rating rating) {
 		return new ResponseEntity<Rating>(ratingService.saveRating(rating), HttpStatus.CREATED);
 	}
@@ -60,7 +61,7 @@ public class RatingController {
 	 * @param id
 	 * @return Rating found
 	 */
-	@GetMapping("/rating/{id}")
+	@GetMapping("/{id}")
 	public Rating getRatingById(@PathVariable Integer id) {
 		return ratingService.findRatingById(id);
 	}
@@ -71,7 +72,7 @@ public class RatingController {
 	 * @param rating
 	 * @return Rating update
 	 */
-	@PutMapping("/rating/update")
+	@PutMapping("/update")
 	public Rating updateRating(@Valid @RequestBody Rating rating) {
 		return ratingService.updateRating(rating);
 	}
@@ -79,7 +80,7 @@ public class RatingController {
 	/**
 	 * Find Rating by Id and delete the Rating.
 	 */
-	@DeleteMapping("/rating/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteRating(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<Rating> bidOptional = Optional.ofNullable(ratingService.findRatingById(id));
 		if (bidOptional.isPresent()) {

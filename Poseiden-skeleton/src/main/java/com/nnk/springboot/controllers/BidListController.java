@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.servicesImpl.BidListServiceImpl;
 
 @RestController
+@RequestMapping("/api/bidList")
 public class BidListController {
 	/**
 	 * Inject Bid service
@@ -37,7 +39,7 @@ public class BidListController {
 	 * 
 	 * @return bid List found
 	 */
-	@GetMapping("/bidList/list")
+	@GetMapping("/list")
 	public List<BidList> home() {
 		return bidListService.findBidListByList();
 	}
@@ -48,7 +50,7 @@ public class BidListController {
 	 * @param id
 	 * @return Bid found
 	 */
-	@GetMapping("/bidList/list/{id}")
+	@GetMapping("/list/{id}")
 	public BidList findBidListById(@PathVariable int id) {
 		return bidListService.findBidListById(id);
 	}
@@ -59,7 +61,7 @@ public class BidListController {
 	 * @param bid
 	 * @return bid list added
 	 */
-	@PostMapping("/bidList/add")
+	@PostMapping("/add")
 	public ResponseEntity<BidList> addBidList(@Valid @RequestBody BidList bid) {
 		return new ResponseEntity<BidList>(bidListService.saveBidList(bid), HttpStatus.CREATED);
 	}
@@ -70,7 +72,7 @@ public class BidListController {
 	 * @param bidList
 	 * @return bid list updated
 	 */
-	@PutMapping("/bidList/update")
+	@PutMapping("/update")
 	public BidList updateBid(@Valid @RequestBody BidList bidList) {
 		return bidListService.updateBidList(bidList);
 	}
@@ -78,7 +80,7 @@ public class BidListController {
 	/**
 	 * Find Bid by Id and delete the bid
 	 */
-	@DeleteMapping("/bidList/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteBid(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<BidList> bidOptional = Optional.ofNullable(bidListService.findBidListById(id));
 		if (bidOptional.isPresent()) {

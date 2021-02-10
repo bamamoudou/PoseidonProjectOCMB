@@ -50,7 +50,7 @@ public class TradeControllerTest {
 	@Test
 	public void findTradeByIdTest() throws Exception {
 		when(tradeService.findTradeById(1)).thenReturn(trade);
-		mockMvc.perform(get("/trade/ + 1")).andExpect(status().is2xxSuccessful());
+		mockMvc.perform(get("/api/trade/ + 1")).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
@@ -58,7 +58,7 @@ public class TradeControllerTest {
 		when(tradeService.findTradeBylist()).thenReturn(trades);
 		mockMvc
 				.perform(
-						get("/trade/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(trade)))
+						get("/api/trade/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(trade)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
@@ -67,7 +67,7 @@ public class TradeControllerTest {
 		when(tradeService.saveTrade(trade)).thenReturn(trade);
 		mockMvc
 				.perform(
-						post("/trade/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(trade)))
+						post("/api/trade/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(trade)))
 				.andExpect(status().isCreated());
 	}
 
@@ -75,12 +75,12 @@ public class TradeControllerTest {
 	public void updateTradeTest() throws Exception {
 		when(tradeService.updateTrade(trade)).thenReturn(trade);
 		mockMvc.perform(
-				put("/trade/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(trade)))
+				put("/api/trade/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(trade)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void deleteTradeIfExistTest() throws Exception {
-		mockMvc.perform(delete("/trade/delete/" + 1)).andExpect(status().isOk());
+		mockMvc.perform(delete("/api/trade/delete/" + 1)).andExpect(status().isOk());
 	}
 }

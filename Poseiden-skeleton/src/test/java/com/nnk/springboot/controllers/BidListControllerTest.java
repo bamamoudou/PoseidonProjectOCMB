@@ -51,7 +51,7 @@ public class BidListControllerTest {
 	@Test
 	public void findBidListByIdTest() throws Exception {
 		when(bidListService.findBidListById(bidList.getBidListId())).thenReturn(bidList);
-		mockMvc.perform(get("/bidList/list").param("id", "1")).andExpect(status().is2xxSuccessful());
+		mockMvc.perform(get("/api/bidList/list").param("id", "1")).andExpect(status().is2xxSuccessful());
 
 	}
 
@@ -59,7 +59,7 @@ public class BidListControllerTest {
 	public void findBidListByListHomeTest() throws Exception {
 		when(bidListService.findBidListByList()).thenReturn(listOfBids);
 		mockMvc.perform(
-				get("/bidList/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(bidList)))
+				get("/api/bidList/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(bidList)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
@@ -67,7 +67,7 @@ public class BidListControllerTest {
 	public void addBidListTest() throws Exception {
 		when(bidListService.saveBidList(bidList)).thenReturn(bidList);
 		mockMvc.perform(
-				post("/bidList/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(bidList)))
+				post("/api/bidList/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(bidList)))
 				.andExpect(status().isCreated());
 	}
 
@@ -75,12 +75,12 @@ public class BidListControllerTest {
 	public void updateBidListTest() throws JsonProcessingException, Exception {
 		when(bidListService.updateBidList(bidList)).thenReturn(bidList);
 		mockMvc.perform(
-				put("/bidList/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(bidList)))
+				put("/api/bidList/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(bidList)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void deleteBidIfExistTest() throws Exception {
-		mockMvc.perform(delete("/bidList/delete/" + 1)).andExpect(status().isOk());
+		mockMvc.perform(delete("/api/bidList/delete/" + 1)).andExpect(status().isOk());
 	}
 }

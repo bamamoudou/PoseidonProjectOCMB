@@ -51,14 +51,14 @@ public class RatingControllerTest {
 	@Test
 	public void findRatingByIdTest() throws Exception {
 		when(ratingService.findRatingById(1)).thenReturn(rating);
-		mockMvc.perform(get("/rating/ + 1")).andExpect(status().is2xxSuccessful());
+		mockMvc.perform(get("/api/rating/ + 1")).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void findRatingByListTest() throws Exception {
 		when(ratingService.findRatingByList()).thenReturn(ratingList);
 		mockMvc.perform(
-				get("/rating/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(rating)))
+				get("/api/rating/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(rating)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
@@ -66,7 +66,7 @@ public class RatingControllerTest {
 	public void addRatingTest() throws Exception {
 		when(ratingService.saveRating(rating)).thenReturn(rating);
 		mockMvc.perform(
-				post("/rating/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(rating)))
+				post("/api/rating/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(rating)))
 				.andExpect(status().isCreated());
 	}
 
@@ -74,12 +74,12 @@ public class RatingControllerTest {
 	public void updateRatingTest() throws JsonProcessingException, Exception {
 		when(ratingService.updateRating(rating)).thenReturn(rating);
 		mockMvc.perform(
-				put("/rating/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(rating)))
+				put("/api/rating/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(rating)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void deleteRatingTest() throws Exception {
-		mockMvc.perform(delete("/rating/delete/" + 1)).andExpect(status().isOk());
+		mockMvc.perform(delete("/api/rating/delete/" + 1)).andExpect(status().isOk());
 	}
 }

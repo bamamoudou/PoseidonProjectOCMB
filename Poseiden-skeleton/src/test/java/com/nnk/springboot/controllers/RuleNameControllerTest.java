@@ -52,7 +52,7 @@ public class RuleNameControllerTest {
 	public void findRuleByListTest() throws Exception {
 		when(ruleNameService.findRuleNameByList()).thenReturn(ruleList);
 		mockMvc.perform(
-				get("/ruleName/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(ruleName)))
+				get("/api/ruleName/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(ruleName)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
@@ -60,19 +60,19 @@ public class RuleNameControllerTest {
 	public void addRuleTest() throws Exception {
 		when(ruleNameService.saveRuleName(ruleName)).thenReturn(ruleName);
 		mockMvc.perform(
-				post("/ruleName/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(ruleName)))
+				post("/api/ruleName/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(ruleName)))
 				.andExpect(status().isCreated());
 	}
 
 	@Test
 	public void updateRuleTest() throws JsonProcessingException, Exception {
 		when(ruleNameService.updateRuleName(ruleName)).thenReturn(ruleName);
-		mockMvc.perform(put("/ruleName/update").contentType(MediaType.APPLICATION_JSON)
+		mockMvc.perform(put("/api/ruleName/update").contentType(MediaType.APPLICATION_JSON)
 				.content(mapper.writeValueAsString(ruleName))).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void deleteRuleTest() throws Exception {
-		mockMvc.perform(delete("/ruleName/delete/" + 1)).andExpect(status().isOk());
+		mockMvc.perform(delete("/api/ruleName/delete/" + 1)).andExpect(status().isOk());
 	}
 }

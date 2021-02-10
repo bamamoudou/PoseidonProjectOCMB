@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 
 @RestController
+@RequestMapping("/api/curvePoint")
 public class CurveController {
 	/**
 	 * Inject Curve Point service
@@ -37,7 +39,7 @@ public class CurveController {
 	 * 
 	 * @return curve point list
 	 */
-	@GetMapping("/curvePoint/list")
+	@GetMapping("/list")
 	public List<CurvePoint> home() {
 		return curveService.findCurvePointByList();
 	}
@@ -48,7 +50,7 @@ public class CurveController {
 	 * @param curvePoint
 	 * @return Curve added
 	 */
-	@PostMapping("/curvePoint/add")
+	@PostMapping("/add")
 	public ResponseEntity<CurvePoint> addCurvePoint(@Valid @RequestBody CurvePoint curvePoint) {
 		return new ResponseEntity<CurvePoint>(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);
 	}
@@ -59,7 +61,7 @@ public class CurveController {
 	 * @param id
 	 * @return Curve found
 	 */
-	@GetMapping("/curvePoint/{id}")
+	@GetMapping("/{id}")
 	public CurvePoint getCurvePointById(@PathVariable Integer id) {
 		return curveService.findCurvePointById(id);
 	}
@@ -70,7 +72,7 @@ public class CurveController {
 	 * @param curvePoint
 	 * @return Curve updated
 	 */
-	@PutMapping("/curvePoint/update")
+	@PutMapping("/update")
 	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
 		return curveService.updateCurvePoint(curvePoint);
 	}
@@ -78,7 +80,7 @@ public class CurveController {
 	/**
 	 * Find Curve by Id and delete the Curve
 	 */
-	@DeleteMapping("/curvePoint/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteCurve(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<CurvePoint> bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));
 		if (bidOptional.isPresent()) {

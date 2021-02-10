@@ -51,7 +51,7 @@ public class UserControllerTest {
 	@Test
 	public void findUserByUsernameTestTest() throws Exception {
 		when(userService.findUserByUserName(user.getUsername())).thenReturn(user);
-		mockMvc.perform(get("/user/ + username")).andExpect(status().is2xxSuccessful());
+		mockMvc.perform(get("/api/user/findByUsername/ + username")).andExpect(status().is2xxSuccessful());
 
 	}
 
@@ -59,7 +59,7 @@ public class UserControllerTest {
 	public void findUserListHomeTest() throws Exception {
 		when(userService.findAllUsers()).thenReturn(listOfUser);
 		mockMvc
-				.perform(get("/user/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(user)))
+				.perform(get("/api/user/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(user)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
@@ -67,7 +67,7 @@ public class UserControllerTest {
 	public void addUserTest() throws Exception {
 		when(userService.createUser(user)).thenReturn(user);
 		mockMvc
-				.perform(post("/user/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(user)))
+				.perform(post("/api/user/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(user)))
 				.andExpect(status().isCreated());
 	}
 
@@ -76,12 +76,12 @@ public class UserControllerTest {
 		when(userService.updateUser(user)).thenReturn(user);
 		mockMvc
 				.perform(
-						put("/user/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(user)))
+						put("/api/user/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(user)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void deleteUserIfExistTest() throws Exception {
-		mockMvc.perform(delete("/user/delete/" + 1)).andExpect(status().isOk());
+		mockMvc.perform(delete("/api/user/delete/" + 1)).andExpect(status().isOk());
 	}
 }

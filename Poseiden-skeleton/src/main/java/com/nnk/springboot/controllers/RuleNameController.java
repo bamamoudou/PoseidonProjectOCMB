@@ -17,12 +17,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 
 @RestController
+@RequestMapping("/api/ruleName")
 public class RuleNameController {
 	/**
 	 * Inject RuleName service
@@ -37,7 +39,7 @@ public class RuleNameController {
 	 * 
 	 * @return List of ruleName
 	 */
-	@GetMapping("/ruleName/list")
+	@GetMapping("/list")
 	public List<RuleName> home() {
 		return ruleNameService.findRuleNameByList();
 	}
@@ -48,7 +50,7 @@ public class RuleNameController {
 	 * @param ruleName
 	 * @return rule name added
 	 */
-	@PostMapping("/ruleName/add")
+	@PostMapping("/add")
 	public ResponseEntity<RuleName> addRule(@Valid @RequestBody RuleName ruleName) {
 		return new ResponseEntity<RuleName>(ruleNameService.saveRuleName(ruleName), HttpStatus.CREATED);
 	}
@@ -59,7 +61,7 @@ public class RuleNameController {
 	 * @param ruleName
 	 * @return rule name updated
 	 */
-	@PutMapping("/ruleName/update")
+	@PutMapping("/update")
 	public RuleName updateRuleName(@Valid @RequestBody RuleName ruleName) {
 		return ruleNameService.updateRuleName(ruleName);
 	}
@@ -69,7 +71,7 @@ public class RuleNameController {
 	 * 
 	 * @param id
 	 */
-	@DeleteMapping("/ruleName/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public void deleteRuleName(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<RuleName> bidOptional = Optional.ofNullable(ruleNameService.findRuleNameById(id));
 		if (bidOptional.isPresent()) {

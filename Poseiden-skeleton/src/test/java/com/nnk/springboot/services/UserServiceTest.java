@@ -103,7 +103,7 @@ public class UserServiceTest {
 	@Test
 	public void findUserByUserNameTest() {
 		// arrange
-		when(userRepository.findUserByUsername(user.getUsername())).thenReturn(user);
+		when(userRepository.findByUsername(user.getUsername())).thenReturn(Optional.of(user));
 
 		// act
 		User result = userService.findUserByUserName("mamoudou");

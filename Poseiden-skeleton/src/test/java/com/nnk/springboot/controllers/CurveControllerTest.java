@@ -51,14 +51,14 @@ public class CurveControllerTest {
 	@Test
 	public void findCurPointByIdTest() throws Exception {
 		when(curveService.findCurvePointById(1)).thenReturn(curve);
-		mockMvc.perform(get("/curvePoint/ + 1")).andExpect(status().is2xxSuccessful());
+		mockMvc.perform(get("/api/curvePoint/ + 1")).andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void findCurveByListTest() throws Exception {
 		when(curveService.findCurvePointByList()).thenReturn(curves);
 		mockMvc.perform(
-				get("/curvePoint/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(curve)))
+				get("/api/curvePoint/list").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(curve)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
@@ -66,7 +66,7 @@ public class CurveControllerTest {
 	public void addCurvePointTest() throws Exception {
 		when(curveService.saveCurvePoint(curve)).thenReturn(curve);
 		mockMvc.perform(
-				post("/curvePoint/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(curve)))
+				post("/api/curvePoint/add").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(curve)))
 				.andExpect(status().isCreated());
 	}
 
@@ -74,12 +74,12 @@ public class CurveControllerTest {
 	public void updateCurvePointTest() throws JsonProcessingException, Exception {
 		when(curveService.updateCurvePoint(curve)).thenReturn(curve);
 		mockMvc.perform(
-				put("/curvePoint/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(curve)))
+				put("/api/curvePoint/update").contentType(MediaType.APPLICATION_JSON).content(mapper.writeValueAsString(curve)))
 				.andExpect(status().is2xxSuccessful());
 	}
 
 	@Test
 	public void deleteCurvePointTest() throws Exception {
-		mockMvc.perform(delete("/curvePoint/delete/" + 1)).andExpect(status().isOk());
+		mockMvc.perform(delete("/api/curvePoint/delete/" + 1)).andExpect(status().isOk());
 	}
 }
