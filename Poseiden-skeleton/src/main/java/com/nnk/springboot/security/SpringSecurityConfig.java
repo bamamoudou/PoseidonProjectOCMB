@@ -42,11 +42,11 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //   public PasswordEncoder encoder() {
 //		return new BCryptPasswordEncoder();
 //   }
-//	@Autowired
-//	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-//	}
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+	}
 
 	/**
 	 * UserDetailsService to inject.
@@ -75,20 +75,20 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
 //		auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
 //	}
 	
-	 @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    	PasswordEncoder encoder = 
-          PasswordEncoderFactories.createDelegatingPasswordEncoder();
-    	auth
-          .inMemoryAuthentication()
-          .withUser("user")
-          .password(encoder.encode("Test123@password"))
-          .roles("USER")
-          .and()
-          .withUser("admin")
-          .password(encoder.encode("Test123@password"))
-          .roles("USER", "ADMIN");
-    }
+//	 @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//    	PasswordEncoder encoder = 
+//          PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//    	auth
+//          .inMemoryAuthentication()
+//          .withUser("user")
+//          .password(encoder.encode("Test123@password"))
+//          .roles("USER")
+//          .and()
+//          .withUser("admin")
+//          .password(encoder.encode("Test123@password"))
+//          .roles("USER", "ADMIN");
+//    }
 
 	/**
 	 * Configuring web based security for specific http requests & urls. Defines the
