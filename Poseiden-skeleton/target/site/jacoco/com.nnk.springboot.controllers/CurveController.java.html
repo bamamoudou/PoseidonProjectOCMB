@@ -73,8 +73,8 @@ import io.swagger.annotations.ApiOperation;
 	@GetMapping(&quot;/{id}&quot;)
 	public CurvePoint getCurvePointById(@PathVariable Integer id) {
 <span class="fc" id="L75">		LOGGER.debug(</span>
-<span class="fc" id="L76">				&quot;GET request sent from the getCurvePointById of the&quot; + &quot; CurvePointController to retrieve CurvePoint {}&quot;,</span>
-<span class="fc" id="L77">				id);</span>
+				&quot;GET request sent from the getCurvePointById of the&quot; + &quot; CurvePointController to retrieve CurvePoint {}&quot;,
+				id);
 <span class="fc" id="L78">		return curveService.findCurvePointById(id);</span>
 	}
 
@@ -88,7 +88,7 @@ import io.swagger.annotations.ApiOperation;
 	@PutMapping(&quot;/update&quot;)
 	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
 <span class="fc" id="L90">		LOGGER.debug(&quot;PUT request sent from the updateCurve of the&quot; + &quot; CurvePointController to update CurvePoint {}&quot;,</span>
-<span class="fc" id="L91">				curvePoint);</span>
+				curvePoint);
 <span class="fc" id="L92">		return curveService.updateCurvePoint(curvePoint);</span>
 	}
 
@@ -103,7 +103,7 @@ import io.swagger.annotations.ApiOperation;
 <span class="nc" id="L103">			LOGGER.info(&quot;delete CurvePoint, SUCCES&quot;);</span>
 <span class="nc" id="L104">			response.setStatus(200);</span>
 <span class="nc" id="L105">			curveService.deleteCurvePointById(id);</span>
-<span class="nc" id="L106">		} else {</span>
+		} else {
 <span class="fc" id="L107">			LOGGER.error(&quot;Delete CurvePoint, ERROR&quot;);</span>
 		}
 <span class="fc" id="L109">	}</span>

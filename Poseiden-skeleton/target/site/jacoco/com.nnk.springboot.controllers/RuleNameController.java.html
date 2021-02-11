@@ -66,8 +66,8 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	@PutMapping(&quot;/update&quot;)
 	public RuleName updateRuleName(@Valid @RequestBody RuleName ruleName) {
 <span class="fc" id="L68">		LOGGER.debug(</span>
-<span class="fc" id="L69">				&quot;PUT request sent from the updateRuleName method of the&quot; + &quot; RuleNameController to update RuleName {}&quot;,</span>
-<span class="fc" id="L70">				ruleName);</span>
+				&quot;PUT request sent from the updateRuleName method of the&quot; + &quot; RuleNameController to update RuleName {}&quot;,
+				ruleName);
 <span class="fc" id="L71">		return ruleNameService.updateRuleName(ruleName);</span>
 	}
 
@@ -83,7 +83,7 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 <span class="nc" id="L83">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
 <span class="nc" id="L84">			response.setStatus(200);</span>
 <span class="nc" id="L85">			ruleNameService.deleteRuleNameById(id);</span>
-<span class="nc" id="L86">		} else {</span>
+		} else {
 <span class="fc" id="L87">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
 <span class="fc" id="L89">	}</span>
