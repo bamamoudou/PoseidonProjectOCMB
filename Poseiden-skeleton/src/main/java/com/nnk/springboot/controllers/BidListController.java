@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.servicesImpl.BidListServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = "Class used to manage bidList")
 @RestController
 @RequestMapping("/api/bidList")
 public class BidListController {
@@ -39,6 +43,7 @@ public class BidListController {
 	 * 
 	 * @return bid List found
 	 */
+	@ApiOperation(value = "Retrieve all BidLists from database")
 	@GetMapping("/list")
 	public List<BidList> home() {
 		return bidListService.findBidListByList();
@@ -50,6 +55,7 @@ public class BidListController {
 	 * @param id
 	 * @return Bid found
 	 */
+	@ApiOperation(value = "Retrieve a BidList by its id from database")
 	@GetMapping("/list/{id}")
 	public BidList findBidListById(@PathVariable int id) {
 		return bidListService.findBidListById(id);
@@ -61,6 +67,7 @@ public class BidListController {
 	 * @param bid
 	 * @return bid list added
 	 */
+	@ApiOperation(value = "Save a new BidList")
 	@PostMapping("/add")
 	public ResponseEntity<BidList> addBidList(@Valid @RequestBody BidList bid) {
 		return new ResponseEntity<BidList>(bidListService.saveBidList(bid), HttpStatus.CREATED);
@@ -72,6 +79,7 @@ public class BidListController {
 	 * @param bidList
 	 * @return bid list updated
 	 */
+	@ApiOperation(value = "Update an existing BidList")
 	@PutMapping("/update")
 	public BidList updateBid(@Valid @RequestBody BidList bidList) {
 		return bidListService.updateBidList(bidList);
@@ -80,6 +88,7 @@ public class BidListController {
 	/**
 	 * Find Bid by Id and delete the bid
 	 */
+	@ApiOperation(value = "Delete an existing BidList from database")
 	@DeleteMapping("/delete/{id}")
 	public void deleteBid(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<BidList> bidOptional = Optional.ofNullable(bidListService.findBidListById(id));

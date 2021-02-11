@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.servicesImpl.RatingServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = "Class used to manage rating")
 @RestController
 @RequestMapping("/api/rating")
 public class RatingController {
@@ -39,6 +43,7 @@ public class RatingController {
 	 * 
 	 * @return Rating list
 	 */
+	@ApiOperation(value = "Retrieve all Ratings from database")
 	@RequestMapping("/list")
 	public List<Rating> home() {
 		return ratingService.findRatingByList();
@@ -50,6 +55,7 @@ public class RatingController {
 	 * @param rating
 	 * @return rating added
 	 */
+	@ApiOperation(value = "Save a new Rating to database")
 	@PostMapping("/add")
 	public ResponseEntity<Rating> addRating(@Valid @RequestBody Rating rating) {
 		return new ResponseEntity<Rating>(ratingService.saveRating(rating), HttpStatus.CREATED);
@@ -61,6 +67,7 @@ public class RatingController {
 	 * @param id
 	 * @return Rating found
 	 */
+	@ApiOperation(value = "Retrieve Rating by its id from database")
 	@GetMapping("/{id}")
 	public Rating getRatingById(@PathVariable Integer id) {
 		return ratingService.findRatingById(id);
@@ -72,6 +79,7 @@ public class RatingController {
 	 * @param rating
 	 * @return Rating update
 	 */
+	@ApiOperation(value = "Update an existing Rating")
 	@PutMapping("/update")
 	public Rating updateRating(@Valid @RequestBody Rating rating) {
 		return ratingService.updateRating(rating);
@@ -80,6 +88,7 @@ public class RatingController {
 	/**
 	 * Find Rating by Id and delete the Rating.
 	 */
+	@ApiOperation(value = "Delete an existing Rating from database")
 	@DeleteMapping("/delete/{id}")
 	public void deleteRating(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<Rating> bidOptional = Optional.ofNullable(ratingService.findRatingById(id));

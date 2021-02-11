@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.servicesImpl.UserServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = "Class used to manage user")
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
@@ -31,27 +35,61 @@ public class UserController {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(BidListController.class);
 
+	/**
+	 * Retrieve all the Users from database.
+	 *
+	 * @return a list of all the Users
+	 */
+	@ApiOperation(value = "Retrieve all the existing Users from database")
 	@GetMapping("/list")
 	public List<User> home() {
 		return userService.findAllUsers();
 
 	}
 
+	/**
+	 * Check data valid and save to db
+	 * 
+	 * @param user
+	 * @return user added
+	 */
+	@ApiOperation(value = "Save a new User to database")
 	@PostMapping("/add")
 	public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
 		return new ResponseEntity<User>(userService.createUser(user), HttpStatus.CREATED);
 	}
 
+	/**
+	 * Find User by username.
+	 *
+	 * @param username the username of the User to find
+	 * @return a User if found
+	 */
+	@ApiOperation(value = "Retrieve a User by its username from database")
 	@GetMapping("/findByUsername/{username}")
 	public User getUserByUsername(@PathVariable String username) {
 		return userService.findUserByUserName(username);
 	}
 
+	/**
+	 * Update an existing User.
+	 * 
+	 * @param user
+	 * @return user updated
+	 */
+	@ApiOperation(value = "Update an existing User")
 	@PutMapping("/update")
 	public User updateUser(@Valid @RequestBody User user) {
 		return userService.updateUser(user);
 	}
 
+	/**
+	 * Delete an existing User.
+	 * 
+	 * @param id
+	 * @param response
+	 */
+	@ApiOperation(value = "Delete an existing User from database")
 	@DeleteMapping("/delete/{id}")
 	public void deleteUser(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<User> bidOptional = Optional.ofNullable(userService.findUserById(id));

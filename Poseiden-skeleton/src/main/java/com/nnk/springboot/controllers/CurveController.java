@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = "Class used to manage curve")
 @RestController
 @RequestMapping("/api/curvePoint")
 public class CurveController {
@@ -39,6 +43,7 @@ public class CurveController {
 	 * 
 	 * @return curve point list
 	 */
+	@ApiOperation(value = "Retrieve all CurvePoints from database")
 	@GetMapping("/list")
 	public List<CurvePoint> home() {
 		return curveService.findCurvePointByList();
@@ -50,6 +55,7 @@ public class CurveController {
 	 * @param curvePoint
 	 * @return Curve added
 	 */
+	@ApiOperation(value = "Save a new CurvePoint")
 	@PostMapping("/add")
 	public ResponseEntity<CurvePoint> addCurvePoint(@Valid @RequestBody CurvePoint curvePoint) {
 		return new ResponseEntity<CurvePoint>(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);
@@ -61,6 +67,7 @@ public class CurveController {
 	 * @param id
 	 * @return Curve found
 	 */
+	@ApiOperation(value = "Retrieve CurvePoint from database by Id")
 	@GetMapping("/{id}")
 	public CurvePoint getCurvePointById(@PathVariable Integer id) {
 		return curveService.findCurvePointById(id);
@@ -72,6 +79,7 @@ public class CurveController {
 	 * @param curvePoint
 	 * @return Curve updated
 	 */
+	@ApiOperation(value = "Update an existing CurvePoint")
 	@PutMapping("/update")
 	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
 		return curveService.updateCurvePoint(curvePoint);
@@ -80,6 +88,7 @@ public class CurveController {
 	/**
 	 * Find Curve by Id and delete the Curve
 	 */
+	@ApiOperation(value = "Delete a CurvePoint from database by Id")
 	@DeleteMapping("/delete/{id}")
 	public void deleteCurve(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<CurvePoint> bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));

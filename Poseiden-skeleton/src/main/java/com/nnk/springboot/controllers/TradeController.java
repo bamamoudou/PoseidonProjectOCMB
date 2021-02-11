@@ -23,6 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = "Class used to manage trade")
 @RestController
 @RequestMapping("/api/trade")
 public class TradeController {
@@ -38,6 +42,7 @@ public class TradeController {
 	 * 
 	 * @return list of trades
 	 */
+	@ApiOperation(value = "Retrieve all Trades from database")
 	@GetMapping("/list")
 	public List<Trade> home() {
 		return tradeService.findTradeBylist();
@@ -49,6 +54,7 @@ public class TradeController {
 	 * @param trade
 	 * @return Trade added
 	 */
+	@ApiOperation(value = "Save a new Trade to database")
 	@PostMapping("/add")
 	public ResponseEntity<Trade> addTrade(@Valid @RequestBody Trade trade) {
 		return new ResponseEntity<Trade>(tradeService.saveTrade(trade), HttpStatus.CREATED);
@@ -60,6 +66,7 @@ public class TradeController {
 	 * @param id
 	 * @return Trade found
 	 */
+	@ApiOperation(value = "Retrieve Trade by its id from database")
 	@GetMapping("/{id}")
 	public Trade getTrade(@PathVariable Integer id) {
 		return tradeService.findTradeById(id);
@@ -71,6 +78,7 @@ public class TradeController {
 	 * @param trade
 	 * @return Trade updated
 	 */
+	@ApiOperation(value = "Update an existing Trade")
 	@PutMapping("/update")
 	public Trade updateTrade(@Valid @RequestBody Trade trade) {
 		return tradeService.updateTrade(trade);
@@ -81,6 +89,7 @@ public class TradeController {
 	 * 
 	 * @param id
 	 */
+	@ApiOperation(value = "Delete an existing Trade from database")
 	@DeleteMapping("/delete/{id}")
 	public void deleteTrade(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<Trade> bidOptional = Optional.ofNullable(tradeService.findTradeById(id));
