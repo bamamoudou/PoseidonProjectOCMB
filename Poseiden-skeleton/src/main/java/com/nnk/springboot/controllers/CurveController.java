@@ -46,6 +46,7 @@ public class CurveController {
 	@ApiOperation(value = "Retrieve all CurvePoints from database")
 	@GetMapping("/list")
 	public List<CurvePoint> home() {
+		LOGGER.debug("GET request sent from the list of the" + " CurvePointController to retrieve all CurvePoints");
 		return curveService.findCurvePointByList();
 	}
 
@@ -58,6 +59,7 @@ public class CurveController {
 	@ApiOperation(value = "Save a new CurvePoint")
 	@PostMapping("/add")
 	public ResponseEntity<CurvePoint> addCurvePoint(@Valid @RequestBody CurvePoint curvePoint) {
+		LOGGER.debug("POST request set from the addCurvePoint" + " of the CurvePointController to save a new CurvePoint");
 		return new ResponseEntity<CurvePoint>(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);
 	}
 
@@ -70,6 +72,9 @@ public class CurveController {
 	@ApiOperation(value = "Retrieve CurvePoint from database by Id")
 	@GetMapping("/{id}")
 	public CurvePoint getCurvePointById(@PathVariable Integer id) {
+		LOGGER.debug(
+				"GET request sent from the getCurvePointById of the" + " CurvePointController to retrieve CurvePoint {}",
+				id);
 		return curveService.findCurvePointById(id);
 	}
 
@@ -82,6 +87,8 @@ public class CurveController {
 	@ApiOperation(value = "Update an existing CurvePoint")
 	@PutMapping("/update")
 	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
+		LOGGER.debug("PUT request sent from the updateCurve of the" + " CurvePointController to update CurvePoint {}",
+				curvePoint);
 		return curveService.updateCurvePoint(curvePoint);
 	}
 
@@ -93,11 +100,11 @@ public class CurveController {
 	public void deleteCurve(@PathVariable Integer id, HttpServletResponse response) {
 		Optional<CurvePoint> bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));
 		if (bidOptional.isPresent()) {
-			LOGGER.info("delete, SUCCES");
+			LOGGER.info("delete CurvePoint, SUCCES");
 			response.setStatus(200);
 			curveService.deleteCurvePointById(id);
 		} else {
-			LOGGER.error("Delete, ERROR");
+			LOGGER.error("Delete CurvePoint, ERROR");
 		}
 	}
 }

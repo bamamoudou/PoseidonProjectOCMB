@@ -46,6 +46,7 @@ public class RatingController {
 	@ApiOperation(value = "Retrieve all Ratings from database")
 	@RequestMapping("/list")
 	public List<Rating> home() {
+		LOGGER.debug("GET request sent from the list of the" + " RatingController to retrieve all the Ratings");
 		return ratingService.findRatingByList();
 	}
 
@@ -58,6 +59,7 @@ public class RatingController {
 	@ApiOperation(value = "Save a new Rating to database")
 	@PostMapping("/add")
 	public ResponseEntity<Rating> addRating(@Valid @RequestBody Rating rating) {
+		LOGGER.debug("POST request sent from the addRating of the" + " RatingController to save a new Rating");
 		return new ResponseEntity<Rating>(ratingService.saveRating(rating), HttpStatus.CREATED);
 	}
 
@@ -70,6 +72,7 @@ public class RatingController {
 	@ApiOperation(value = "Retrieve Rating by its id from database")
 	@GetMapping("/{id}")
 	public Rating getRatingById(@PathVariable Integer id) {
+		LOGGER.debug("GET request sent from the getRatingById of the" + " RatingController to retrieve Rating {}", id);
 		return ratingService.findRatingById(id);
 	}
 
@@ -82,6 +85,8 @@ public class RatingController {
 	@ApiOperation(value = "Update an existing Rating")
 	@PutMapping("/update")
 	public Rating updateRating(@Valid @RequestBody Rating rating) {
+		LOGGER.debug("Put request sent from the updateRating method of the" + " RatingController to update Rating {}",
+				rating);
 		return ratingService.updateRating(rating);
 	}
 

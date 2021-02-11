@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
 	@Autowired
 	private UserServiceImpl userService;
 
-<span class="fc" id="L36">	private static final Logger LOGGER = LoggerFactory.getLogger(BidListController.class);</span>
+<span class="fc" id="L36">	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);</span>
 
 	/**
 	 * Retrieve all the Users from database.
@@ -43,7 +43,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Retrieve all the existing Users from database&quot;)
 	@GetMapping(&quot;/list&quot;)
 	public List&lt;User&gt; home() {
-<span class="fc" id="L46">		return userService.findAllUsers();</span>
+<span class="fc" id="L46">		LOGGER.debug(&quot;GET request sent from the UserController&quot; + &quot; to retrieve all the Users&quot;);</span>
+<span class="fc" id="L47">		return userService.findAllUsers();</span>
 
 	}
 
@@ -56,7 +57,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Save a new User to database&quot;)
 	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;User&gt; addUser(@Valid @RequestBody User user) {
-<span class="nc" id="L59">		return new ResponseEntity&lt;User&gt;(userService.createUser(user), HttpStatus.CREATED);</span>
+<span class="nc" id="L60">		LOGGER.debug(&quot;POST request sent from the&quot; + &quot; UserController to save a new User&quot;);</span>
+<span class="nc" id="L61">		return new ResponseEntity&lt;User&gt;(userService.createUser(user), HttpStatus.CREATED);</span>
 	}
 
 	/**
@@ -68,7 +70,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Retrieve a User by its username from database&quot;)
 	@GetMapping(&quot;/findByUsername/{username}&quot;)
 	public User getUserByUsername(@PathVariable String username) {
-<span class="fc" id="L71">		return userService.findUserByUserName(username);</span>
+<span class="fc" id="L73">		LOGGER.debug(&quot;GET request sent from the UserController to&quot; + &quot; find a User by username {}&quot;, username);</span>
+<span class="fc" id="L74">		return userService.findUserByUserName(username);</span>
 	}
 
 	/**
@@ -80,7 +83,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Update an existing User&quot;)
 	@PutMapping(&quot;/update&quot;)
 	public User updateUser(@Valid @RequestBody User user) {
-<span class="nc" id="L83">		return userService.updateUser(user);</span>
+<span class="nc" id="L86">		LOGGER.debug(&quot;PUT request sent from the&quot; + &quot; UserApiController to update User {}&quot;, user);</span>
+<span class="nc" id="L87">		return userService.updateUser(user);</span>
 	}
 
 	/**
@@ -92,14 +96,14 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Delete an existing User from database&quot;)
 	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteUser(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L95">		Optional&lt;User&gt; bidOptional = Optional.ofNullable(userService.findUserById(id));</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L97">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L98">			response.setStatus(200);</span>
-<span class="nc" id="L99">			userService.deleteUser(id);</span>
-<span class="nc" id="L100">		} else {</span>
-<span class="fc" id="L101">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L99">		Optional&lt;User&gt; bidOptional = Optional.ofNullable(userService.findUserById(id));</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L101">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L102">			response.setStatus(200);</span>
+<span class="nc" id="L103">			userService.deleteUser(id);</span>
+<span class="nc" id="L104">		} else {</span>
+<span class="fc" id="L105">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L107">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

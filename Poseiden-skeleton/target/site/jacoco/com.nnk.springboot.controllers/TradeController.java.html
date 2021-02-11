@@ -45,7 +45,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Retrieve all Trades from database&quot;)
 	@GetMapping(&quot;/list&quot;)
 	public List&lt;Trade&gt; home() {
-<span class="fc" id="L48">		return tradeService.findTradeBylist();</span>
+<span class="fc" id="L48">		LOGGER.debug(&quot;GET request sent from the TradeController&quot; + &quot; to retrieve all Trades&quot;);</span>
+<span class="fc" id="L49">		return tradeService.findTradeBylist();</span>
 	}
 
 	/**
@@ -57,7 +58,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Save a new Trade to database&quot;)
 	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;Trade&gt; addTrade(@Valid @RequestBody Trade trade) {
-<span class="fc" id="L60">		return new ResponseEntity&lt;Trade&gt;(tradeService.saveTrade(trade), HttpStatus.CREATED);</span>
+<span class="fc" id="L61">		LOGGER.debug(&quot;POST request sent from the TradeController&quot; + &quot; to save a new Trades {}&quot;, trade.getTradeId());</span>
+<span class="fc" id="L62">		return new ResponseEntity&lt;Trade&gt;(tradeService.saveTrade(trade), HttpStatus.CREATED);</span>
 	}
 
 	/**
@@ -69,7 +71,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Retrieve Trade by its id from database&quot;)
 	@GetMapping(&quot;/{id}&quot;)
 	public Trade getTrade(@PathVariable Integer id) {
-<span class="fc" id="L72">		return tradeService.findTradeById(id);</span>
+<span class="fc" id="L74">		LOGGER.debug(&quot;GET request sent from the TradeController&quot; + &quot; to retrieve Trade {}&quot;, id);</span>
+<span class="fc" id="L75">		return tradeService.findTradeById(id);</span>
 	}
 
 	/**
@@ -81,7 +84,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Update an existing Trade&quot;)
 	@PutMapping(&quot;/update&quot;)
 	public Trade updateTrade(@Valid @RequestBody Trade trade) {
-<span class="fc" id="L84">		return tradeService.updateTrade(trade);</span>
+<span class="fc" id="L87">		LOGGER.debug(&quot;PUT request sent from the TradeApiController&quot; + &quot; to update Trade {}&quot;, trade);</span>
+<span class="fc" id="L88">		return tradeService.updateTrade(trade);</span>
 	}
 
 	/**
@@ -92,14 +96,14 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Delete an existing Trade from database&quot;)
 	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteTrade(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L95">		Optional&lt;Trade&gt; bidOptional = Optional.ofNullable(tradeService.findTradeById(id));</span>
-<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L97">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L98">			response.setStatus(200);</span>
-<span class="nc" id="L99">			tradeService.deleteTradeById(id);</span>
-<span class="nc" id="L100">		} else {</span>
-<span class="fc" id="L101">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L99">		Optional&lt;Trade&gt; bidOptional = Optional.ofNullable(tradeService.findTradeById(id));</span>
+<span class="pc bpc" id="L100" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L101">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L102">			response.setStatus(200);</span>
+<span class="nc" id="L103">			tradeService.deleteTradeById(id);</span>
+<span class="nc" id="L104">		} else {</span>
+<span class="fc" id="L105">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
-<span class="fc" id="L103">	}</span>
+<span class="fc" id="L107">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

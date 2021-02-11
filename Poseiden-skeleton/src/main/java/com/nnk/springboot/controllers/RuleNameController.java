@@ -41,6 +41,7 @@ public class RuleNameController {
 	 */
 	@GetMapping("/list")
 	public List<RuleName> home() {
+		LOGGER.debug("GET request sent from the  home method of the" + " RuleNameController to retrieve the RuleNames");
 		return ruleNameService.findRuleNameByList();
 	}
 
@@ -52,6 +53,7 @@ public class RuleNameController {
 	 */
 	@PostMapping("/add")
 	public ResponseEntity<RuleName> addRule(@Valid @RequestBody RuleName ruleName) {
+		LOGGER.debug("POST request sent from the addRule method of the" + " RuleNameController to save a new RuleName");
 		return new ResponseEntity<RuleName>(ruleNameService.saveRuleName(ruleName), HttpStatus.CREATED);
 	}
 
@@ -63,6 +65,9 @@ public class RuleNameController {
 	 */
 	@PutMapping("/update")
 	public RuleName updateRuleName(@Valid @RequestBody RuleName ruleName) {
+		LOGGER.debug(
+				"PUT request sent from the updateRuleName method of the" + " RuleNameController to update RuleName {}",
+				ruleName);
 		return ruleNameService.updateRuleName(ruleName);
 	}
 

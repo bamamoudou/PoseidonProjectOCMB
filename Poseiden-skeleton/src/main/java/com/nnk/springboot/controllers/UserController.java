@@ -33,7 +33,7 @@ public class UserController {
 	@Autowired
 	private UserServiceImpl userService;
 
-	private static final Logger LOGGER = LoggerFactory.getLogger(BidListController.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
 
 	/**
 	 * Retrieve all the Users from database.
@@ -43,6 +43,7 @@ public class UserController {
 	@ApiOperation(value = "Retrieve all the existing Users from database")
 	@GetMapping("/list")
 	public List<User> home() {
+		LOGGER.debug("GET request sent from the UserController" + " to retrieve all the Users");
 		return userService.findAllUsers();
 
 	}
@@ -56,6 +57,7 @@ public class UserController {
 	@ApiOperation(value = "Save a new User to database")
 	@PostMapping("/add")
 	public ResponseEntity<User> addUser(@Valid @RequestBody User user) {
+		LOGGER.debug("POST request sent from the" + " UserController to save a new User");
 		return new ResponseEntity<User>(userService.createUser(user), HttpStatus.CREATED);
 	}
 
@@ -68,6 +70,7 @@ public class UserController {
 	@ApiOperation(value = "Retrieve a User by its username from database")
 	@GetMapping("/findByUsername/{username}")
 	public User getUserByUsername(@PathVariable String username) {
+		LOGGER.debug("GET request sent from the UserController to" + " find a User by username {}", username);
 		return userService.findUserByUserName(username);
 	}
 
@@ -80,6 +83,7 @@ public class UserController {
 	@ApiOperation(value = "Update an existing User")
 	@PutMapping("/update")
 	public User updateUser(@Valid @RequestBody User user) {
+		LOGGER.debug("PUT request sent from the" + " UserApiController to update User {}", user);
 		return userService.updateUser(user);
 	}
 

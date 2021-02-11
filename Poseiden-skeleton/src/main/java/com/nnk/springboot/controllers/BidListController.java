@@ -46,6 +46,8 @@ public class BidListController {
 	@ApiOperation(value = "Retrieve all BidLists from database")
 	@GetMapping("/list")
 	public List<BidList> home() {
+		LOGGER.debug("GET request sent from the bidListList" + " method of the BidListController"
+				+ " to retrieve all BidLists");
 		return bidListService.findBidListByList();
 	}
 
@@ -58,6 +60,7 @@ public class BidListController {
 	@ApiOperation(value = "Retrieve a BidList by its id from database")
 	@GetMapping("/list/{id}")
 	public BidList findBidListById(@PathVariable int id) {
+		LOGGER.debug("GET request sent from the findBidListById" + " of the BidListApiController to load BidList {}", id);
 		return bidListService.findBidListById(id);
 	}
 
@@ -70,6 +73,7 @@ public class BidListController {
 	@ApiOperation(value = "Save a new BidList")
 	@PostMapping("/add")
 	public ResponseEntity<BidList> addBidList(@Valid @RequestBody BidList bid) {
+		LOGGER.debug("POST request sent from the addBidList" + " of the BidListController");
 		return new ResponseEntity<BidList>(bidListService.saveBidList(bid), HttpStatus.CREATED);
 	}
 
@@ -82,6 +86,8 @@ public class BidListController {
 	@ApiOperation(value = "Update an existing BidList")
 	@PutMapping("/update")
 	public BidList updateBid(@Valid @RequestBody BidList bidList) {
+		LOGGER.debug("PUT request sent from the updateBidList" + " of the BidListApiController to update BidList {}",
+				bidList);
 		return bidListService.updateBidList(bidList);
 	}
 

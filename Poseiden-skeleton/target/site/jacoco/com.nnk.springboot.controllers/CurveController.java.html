@@ -46,7 +46,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Retrieve all CurvePoints from database&quot;)
 	@GetMapping(&quot;/list&quot;)
 	public List&lt;CurvePoint&gt; home() {
-<span class="fc" id="L49">		return curveService.findCurvePointByList();</span>
+<span class="fc" id="L49">		LOGGER.debug(&quot;GET request sent from the list of the&quot; + &quot; CurvePointController to retrieve all CurvePoints&quot;);</span>
+<span class="fc" id="L50">		return curveService.findCurvePointByList();</span>
 	}
 
 	/**
@@ -58,7 +59,8 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Save a new CurvePoint&quot;)
 	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;CurvePoint&gt; addCurvePoint(@Valid @RequestBody CurvePoint curvePoint) {
-<span class="fc" id="L61">		return new ResponseEntity&lt;CurvePoint&gt;(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);</span>
+<span class="fc" id="L62">		LOGGER.debug(&quot;POST request set from the addCurvePoint&quot; + &quot; of the CurvePointController to save a new CurvePoint&quot;);</span>
+<span class="fc" id="L63">		return new ResponseEntity&lt;CurvePoint&gt;(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);</span>
 	}
 
 	/**
@@ -70,7 +72,10 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Retrieve CurvePoint from database by Id&quot;)
 	@GetMapping(&quot;/{id}&quot;)
 	public CurvePoint getCurvePointById(@PathVariable Integer id) {
-<span class="fc" id="L73">		return curveService.findCurvePointById(id);</span>
+<span class="fc" id="L75">		LOGGER.debug(</span>
+<span class="fc" id="L76">				&quot;GET request sent from the getCurvePointById of the&quot; + &quot; CurvePointController to retrieve CurvePoint {}&quot;,</span>
+<span class="fc" id="L77">				id);</span>
+<span class="fc" id="L78">		return curveService.findCurvePointById(id);</span>
 	}
 
 	/**
@@ -82,7 +87,9 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Update an existing CurvePoint&quot;)
 	@PutMapping(&quot;/update&quot;)
 	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
-<span class="fc" id="L85">		return curveService.updateCurvePoint(curvePoint);</span>
+<span class="fc" id="L90">		LOGGER.debug(&quot;PUT request sent from the updateCurve of the&quot; + &quot; CurvePointController to update CurvePoint {}&quot;,</span>
+<span class="fc" id="L91">				curvePoint);</span>
+<span class="fc" id="L92">		return curveService.updateCurvePoint(curvePoint);</span>
 	}
 
 	/**
@@ -91,14 +98,14 @@ import io.swagger.annotations.ApiOperation;
 	@ApiOperation(value = &quot;Delete a CurvePoint from database by Id&quot;)
 	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteCurve(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L94">		Optional&lt;CurvePoint&gt; bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));</span>
-<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L96">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L97">			response.setStatus(200);</span>
-<span class="nc" id="L98">			curveService.deleteCurvePointById(id);</span>
-<span class="nc" id="L99">		} else {</span>
-<span class="fc" id="L100">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L101">		Optional&lt;CurvePoint&gt; bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));</span>
+<span class="pc bpc" id="L102" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L103">			LOGGER.info(&quot;delete CurvePoint, SUCCES&quot;);</span>
+<span class="nc" id="L104">			response.setStatus(200);</span>
+<span class="nc" id="L105">			curveService.deleteCurvePointById(id);</span>
+<span class="nc" id="L106">		} else {</span>
+<span class="fc" id="L107">			LOGGER.error(&quot;Delete CurvePoint, ERROR&quot;);</span>
 		}
-<span class="fc" id="L102">	}</span>
+<span class="fc" id="L109">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -41,7 +41,8 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	 */
 	@GetMapping(&quot;/list&quot;)
 	public List&lt;RuleName&gt; home() {
-<span class="fc" id="L44">		return ruleNameService.findRuleNameByList();</span>
+<span class="fc" id="L44">		LOGGER.debug(&quot;GET request sent from the  home method of the&quot; + &quot; RuleNameController to retrieve the RuleNames&quot;);</span>
+<span class="fc" id="L45">		return ruleNameService.findRuleNameByList();</span>
 	}
 
 	/**
@@ -52,7 +53,8 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	 */
 	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;RuleName&gt; addRule(@Valid @RequestBody RuleName ruleName) {
-<span class="fc" id="L55">		return new ResponseEntity&lt;RuleName&gt;(ruleNameService.saveRuleName(ruleName), HttpStatus.CREATED);</span>
+<span class="fc" id="L56">		LOGGER.debug(&quot;POST request sent from the addRule method of the&quot; + &quot; RuleNameController to save a new RuleName&quot;);</span>
+<span class="fc" id="L57">		return new ResponseEntity&lt;RuleName&gt;(ruleNameService.saveRuleName(ruleName), HttpStatus.CREATED);</span>
 	}
 
 	/**
@@ -63,7 +65,10 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	 */
 	@PutMapping(&quot;/update&quot;)
 	public RuleName updateRuleName(@Valid @RequestBody RuleName ruleName) {
-<span class="fc" id="L66">		return ruleNameService.updateRuleName(ruleName);</span>
+<span class="fc" id="L68">		LOGGER.debug(</span>
+<span class="fc" id="L69">				&quot;PUT request sent from the updateRuleName method of the&quot; + &quot; RuleNameController to update RuleName {}&quot;,</span>
+<span class="fc" id="L70">				ruleName);</span>
+<span class="fc" id="L71">		return ruleNameService.updateRuleName(ruleName);</span>
 	}
 
 	/**
@@ -73,14 +78,14 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	 */
 	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteRuleName(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L76">		Optional&lt;RuleName&gt; bidOptional = Optional.ofNullable(ruleNameService.findRuleNameById(id));</span>
-<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L78">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L79">			response.setStatus(200);</span>
-<span class="nc" id="L80">			ruleNameService.deleteRuleNameById(id);</span>
-<span class="nc" id="L81">		} else {</span>
-<span class="fc" id="L82">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L81">		Optional&lt;RuleName&gt; bidOptional = Optional.ofNullable(ruleNameService.findRuleNameById(id));</span>
+<span class="pc bpc" id="L82" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L83">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L84">			response.setStatus(200);</span>
+<span class="nc" id="L85">			ruleNameService.deleteRuleNameById(id);</span>
+<span class="nc" id="L86">		} else {</span>
+<span class="fc" id="L87">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
-<span class="fc" id="L84">	}</span>
+<span class="fc" id="L89">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -45,6 +45,7 @@ public class TradeController {
 	@ApiOperation(value = "Retrieve all Trades from database")
 	@GetMapping("/list")
 	public List<Trade> home() {
+		LOGGER.debug("GET request sent from the TradeController" + " to retrieve all Trades");
 		return tradeService.findTradeBylist();
 	}
 
@@ -57,6 +58,7 @@ public class TradeController {
 	@ApiOperation(value = "Save a new Trade to database")
 	@PostMapping("/add")
 	public ResponseEntity<Trade> addTrade(@Valid @RequestBody Trade trade) {
+		LOGGER.debug("POST request sent from the TradeController" + " to save a new Trades {}", trade.getTradeId());
 		return new ResponseEntity<Trade>(tradeService.saveTrade(trade), HttpStatus.CREATED);
 	}
 
@@ -69,6 +71,7 @@ public class TradeController {
 	@ApiOperation(value = "Retrieve Trade by its id from database")
 	@GetMapping("/{id}")
 	public Trade getTrade(@PathVariable Integer id) {
+		LOGGER.debug("GET request sent from the TradeController" + " to retrieve Trade {}", id);
 		return tradeService.findTradeById(id);
 	}
 
@@ -81,6 +84,7 @@ public class TradeController {
 	@ApiOperation(value = "Update an existing Trade")
 	@PutMapping("/update")
 	public Trade updateTrade(@Valid @RequestBody Trade trade) {
+		LOGGER.debug("PUT request sent from the TradeApiController" + " to update Trade {}", trade);
 		return tradeService.updateTrade(trade);
 	}
 
