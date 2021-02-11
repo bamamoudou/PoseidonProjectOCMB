@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SpringSecurityConfig.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.security</a> &gt; <span class="el_source">SpringSecurityConfig.java</span></div><h1>SpringSecurityConfig.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.security;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+@Configuration
+@EnableWebSecurity
+@EnableGlobalMethodSecurity(securedEnabled=true)
+public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
+	/**
+	 * UserDetailsService to inject.
+	 */
+	private final UserDetailsService userDetailsService;
+
+	/**
+	 * Instantiates a new Poseidon security config.
+	 *
+	 * @param pUserDetailsService the UserDetailsService
+	 */
+	@Autowired
+<span class="fc" id="L29">	public SpringSecurityConfig(@Qualifier(&quot;myUserDetailsService&quot;) final UserDetailsService myUserDetailsService) {</span>
+<span class="fc" id="L30">		this.userDetailsService = myUserDetailsService;</span>
+<span class="fc" id="L31">	}</span>
+
+	/**
+	 * Allows building UserDetailsService based authentication.
+	 * 
+	 * @param auth AuthenticationManagerBuilder
+	 * @throws Exception if an error occurs when building the UserDetailsService
+	 *                   based authentication
+	 */
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+<span class="fc" id="L42">		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L43">		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);</span>
+<span class="fc" id="L44">	}</span>
+
+	/**
+	 * Configuring web based security for specific http requests &amp; urls. Defines the
+	 * different authorizations on the different urls
+	 * 
+	 * @param http HttpSecurity
+	 * @throws Exception if any problem occurs
+	 */
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+<span class="fc" id="L55">		http.csrf().disable().authorizeRequests().antMatchers(&quot;/admin/**&quot;, &quot;/app/**&quot;, &quot;/api/user/**&quot;)</span>
+<span class="fc" id="L56">				.hasAuthority(&quot;ADMIN&quot;)</span>
+<span class="fc" id="L57">				.antMatchers(&quot;/bidList/**&quot;, &quot;/rating/**&quot;, &quot;/ruleName/**&quot;, &quot;/trade/**&quot;, &quot;/curvePoint/**&quot;)</span>
+<span class="fc" id="L58">				.hasAnyAuthority(&quot;ADMIN&quot;, &quot;USER&quot;).antMatchers(&quot;/api/**&quot;).authenticated().and().formLogin()</span>
+<span class="fc" id="L59">				.defaultSuccessUrl(&quot;/api/bidList/list&quot;, true).and().logout().logoutUrl(&quot;/app-logout&quot;)</span>
+<span class="fc" id="L60">				.logoutSuccessUrl(&quot;/login&quot;).and().exceptionHandling().accessDeniedPage(&quot;/app/error&quot;);</span>
+<span class="fc" id="L61">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

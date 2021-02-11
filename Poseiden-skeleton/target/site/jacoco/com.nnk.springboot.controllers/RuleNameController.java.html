@@ -17,29 +17,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 
 @RestController
-<span class="fc" id="L26">public class RuleNameController {</span>
+@RequestMapping(&quot;/api/ruleName&quot;)
+<span class="fc" id="L28">public class RuleNameController {</span>
 	/**
 	 * Inject RuleName service
 	 */
 	@Autowired
 	private RuleNameServiceImpl ruleNameService;
 
-<span class="fc" id="L33">	private static final Logger LOGGER = LoggerFactory.getLogger(RuleNameController.class);</span>
+<span class="fc" id="L35">	private static final Logger LOGGER = LoggerFactory.getLogger(RuleNameController.class);</span>
 
 	/**
 	 * find all RuleName
 	 * 
 	 * @return List of ruleName
 	 */
-	@GetMapping(&quot;/ruleName/list&quot;)
+	@GetMapping(&quot;/list&quot;)
 	public List&lt;RuleName&gt; home() {
-<span class="fc" id="L42">		return ruleNameService.findRuleNameByList();</span>
+<span class="fc" id="L44">		return ruleNameService.findRuleNameByList();</span>
 	}
 
 	/**
@@ -48,9 +50,9 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	 * @param ruleName
 	 * @return rule name added
 	 */
-	@PostMapping(&quot;/ruleName/add&quot;)
+	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;RuleName&gt; addRule(@Valid @RequestBody RuleName ruleName) {
-<span class="fc" id="L53">		return new ResponseEntity&lt;RuleName&gt;(ruleNameService.saveRuleName(ruleName), HttpStatus.CREATED);</span>
+<span class="fc" id="L55">		return new ResponseEntity&lt;RuleName&gt;(ruleNameService.saveRuleName(ruleName), HttpStatus.CREATED);</span>
 	}
 
 	/**
@@ -59,9 +61,9 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	 * @param ruleName
 	 * @return rule name updated
 	 */
-	@PutMapping(&quot;/ruleName/update&quot;)
+	@PutMapping(&quot;/update&quot;)
 	public RuleName updateRuleName(@Valid @RequestBody RuleName ruleName) {
-<span class="fc" id="L64">		return ruleNameService.updateRuleName(ruleName);</span>
+<span class="fc" id="L66">		return ruleNameService.updateRuleName(ruleName);</span>
 	}
 
 	/**
@@ -69,16 +71,16 @@ import com.nnk.springboot.servicesImpl.RuleNameServiceImpl;
 	 * 
 	 * @param id
 	 */
-	@DeleteMapping(&quot;/ruleName/delete/{id}&quot;)
+	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteRuleName(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L74">		Optional&lt;RuleName&gt; bidOptional = Optional.ofNullable(ruleNameService.findRuleNameById(id));</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L76">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L77">			response.setStatus(200);</span>
-<span class="nc" id="L78">			ruleNameService.deleteRuleNameById(id);</span>
-<span class="nc" id="L79">		} else {</span>
-<span class="fc" id="L80">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L76">		Optional&lt;RuleName&gt; bidOptional = Optional.ofNullable(ruleNameService.findRuleNameById(id));</span>
+<span class="pc bpc" id="L77" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L78">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L79">			response.setStatus(200);</span>
+<span class="nc" id="L80">			ruleNameService.deleteRuleNameById(id);</span>
+<span class="nc" id="L81">		} else {</span>
+<span class="fc" id="L82">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
-<span class="fc" id="L82">	}</span>
+<span class="fc" id="L84">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

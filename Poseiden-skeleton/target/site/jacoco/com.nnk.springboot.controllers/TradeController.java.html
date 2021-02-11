@@ -17,28 +17,35 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = &quot;Class used to manage trade&quot;)
 @RestController
-<span class="fc" id="L26">public class TradeController {</span>
+@RequestMapping(&quot;/api/trade&quot;)
+<span class="fc" id="L32">public class TradeController {</span>
 	/**
 	 * Inject Trade service
 	 */
 	@Autowired
 	private TradeServiceImpl tradeService;
-<span class="fc" id="L32">	private static final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);</span>
+<span class="fc" id="L38">	private static final Logger LOGGER = LoggerFactory.getLogger(TradeController.class);</span>
 
 	/**
 	 * find all Trades
 	 * 
 	 * @return list of trades
 	 */
-	@GetMapping(&quot;/trade/list&quot;)
+	@ApiOperation(value = &quot;Retrieve all Trades from database&quot;)
+	@GetMapping(&quot;/list&quot;)
 	public List&lt;Trade&gt; home() {
-<span class="fc" id="L41">		return tradeService.findTradeBylist();</span>
+<span class="fc" id="L48">		return tradeService.findTradeBylist();</span>
 	}
 
 	/**
@@ -47,9 +54,10 @@ import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 	 * @param trade
 	 * @return Trade added
 	 */
-	@PostMapping(&quot;/trade/add&quot;)
+	@ApiOperation(value = &quot;Save a new Trade to database&quot;)
+	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;Trade&gt; addTrade(@Valid @RequestBody Trade trade) {
-<span class="fc" id="L52">		return new ResponseEntity&lt;Trade&gt;(tradeService.saveTrade(trade), HttpStatus.CREATED);</span>
+<span class="fc" id="L60">		return new ResponseEntity&lt;Trade&gt;(tradeService.saveTrade(trade), HttpStatus.CREATED);</span>
 	}
 
 	/**
@@ -58,9 +66,10 @@ import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 	 * @param id
 	 * @return Trade found
 	 */
-	@GetMapping(&quot;/trade/{id}&quot;)
+	@ApiOperation(value = &quot;Retrieve Trade by its id from database&quot;)
+	@GetMapping(&quot;/{id}&quot;)
 	public Trade getTrade(@PathVariable Integer id) {
-<span class="fc" id="L63">		return tradeService.findTradeById(id);</span>
+<span class="fc" id="L72">		return tradeService.findTradeById(id);</span>
 	}
 
 	/**
@@ -69,9 +78,10 @@ import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 	 * @param trade
 	 * @return Trade updated
 	 */
-	@PutMapping(&quot;/trade/update&quot;)
+	@ApiOperation(value = &quot;Update an existing Trade&quot;)
+	@PutMapping(&quot;/update&quot;)
 	public Trade updateTrade(@Valid @RequestBody Trade trade) {
-<span class="fc" id="L74">		return tradeService.updateTrade(trade);</span>
+<span class="fc" id="L84">		return tradeService.updateTrade(trade);</span>
 	}
 
 	/**
@@ -79,16 +89,17 @@ import com.nnk.springboot.servicesImpl.TradeServiceImpl;
 	 * 
 	 * @param id
 	 */
-	@DeleteMapping(&quot;/trade/delete/{id}&quot;)
+	@ApiOperation(value = &quot;Delete an existing Trade from database&quot;)
+	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteTrade(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L84">		Optional&lt;Trade&gt; bidOptional = Optional.ofNullable(tradeService.findTradeById(id));</span>
-<span class="pc bpc" id="L85" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L86">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L87">			response.setStatus(200);</span>
-<span class="nc" id="L88">			tradeService.deleteTradeById(id);</span>
-<span class="nc" id="L89">		} else {</span>
-<span class="fc" id="L90">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L95">		Optional&lt;Trade&gt; bidOptional = Optional.ofNullable(tradeService.findTradeById(id));</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L97">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L98">			response.setStatus(200);</span>
+<span class="nc" id="L99">			tradeService.deleteTradeById(id);</span>
+<span class="nc" id="L100">		} else {</span>
+<span class="fc" id="L101">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
-<span class="fc" id="L92">	}</span>
+<span class="fc" id="L103">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

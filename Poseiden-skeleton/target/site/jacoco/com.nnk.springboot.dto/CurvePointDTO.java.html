@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CurvePointDTO.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">spring-boot-skeleton</a> &gt; <a href="index.source.html" class="el_package">com.nnk.springboot.dto</a> &gt; <span class="el_source">CurvePointDTO.java</span></div><h1>CurvePointDTO.java</h1><pre class="source lang-java linenums">package com.nnk.springboot.dto;
+
+import java.sql.Timestamp;
+
+import javax.validation.constraints.NotNull;
+
+/**
+ * This class groups information related to curve point.
+ *
+ * @author Yahia CHERIFI
+ */
+
+<span class="nc" id="L13">public class CurvePointDTO {</span>
+
+    /**
+     * CurvePoint id.
+     */
+    private Integer curvePointId;
+
+    /**
+     * curve id.
+     */
+    @NotNull(message = &quot;Curve id is mandatory&quot;)
+    private Integer curveId;
+
+    /**
+     * as of date.
+     */
+    private Timestamp asOfDate;
+
+    /**
+     * term.
+     */
+    @NotNull(message = &quot;Term is mandatory&quot;)
+    private Double term;
+
+    /**
+     * value.
+     */
+    @NotNull(message = &quot;Value id is mandatory&quot;)
+    private Double value;
+
+    /**
+     * creation date.
+     */
+    private Timestamp creationDate;
+
+    /**
+     * asOfDate getter.
+     * @return getAsOf date
+     */
+    public Timestamp getAsOfDate() {
+<span class="nc bnc" id="L53" title="All 2 branches missed.">        if (asOfDate == null) {</span>
+<span class="nc" id="L54">            return null;</span>
+        } else {
+<span class="nc" id="L56">            return new Timestamp(asOfDate.getTime());</span>
+        }
+    }
+
+    /**
+     * asOfDate setter.
+     * @param cAsOfDate date
+     */
+    public void setAsOfDate(final Timestamp cAsOfDate) {
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        if (cAsOfDate == null) {</span>
+<span class="nc" id="L66">            this.creationDate = null;</span>
+<span class="nc" id="L67">        } else {</span>
+<span class="nc" id="L68">            this.asOfDate = new Timestamp(cAsOfDate.getTime());</span>
+        }
+<span class="nc" id="L70">    }</span>
+
+    /**
+     * creationDate getter.
+     * @return creation date
+     */
+    public Timestamp getCreationDate() {
+<span class="nc bnc" id="L77" title="All 2 branches missed.">        if (creationDate == null) {</span>
+<span class="nc" id="L78">            return null;</span>
+        } else {
+<span class="nc" id="L80">            return new Timestamp(creationDate.getTime());</span>
+        }
+    }
+
+    /**
+     * creationDate setter.
+     * @param cCreationDate date
+     */
+    public void setCreationDate(final Timestamp cCreationDate) {
+<span class="nc" id="L89">        this.creationDate = new Timestamp(cCreationDate.getTime());</span>
+<span class="nc" id="L90">    }</span>
+
+	public Integer getCurvePointId() {
+<span class="nc" id="L93">		return curvePointId;</span>
+	}
+
+	public void setCurvePointId(Integer curvePointId) {
+<span class="nc" id="L97">		this.curvePointId = curvePointId;</span>
+<span class="nc" id="L98">	}</span>
+
+	public Integer getCurveId() {
+<span class="nc" id="L101">		return curveId;</span>
+	}
+
+	public void setCurveId(Integer curveId) {
+<span class="nc" id="L105">		this.curveId = curveId;</span>
+<span class="nc" id="L106">	}</span>
+
+	public Double getTerm() {
+<span class="nc" id="L109">		return term;</span>
+	}
+
+	public void setTerm(Double term) {
+<span class="nc" id="L113">		this.term = term;</span>
+<span class="nc" id="L114">	}</span>
+
+	public Double getValue() {
+<span class="nc" id="L117">		return value;</span>
+	}
+
+	public void setValue(Double value) {
+<span class="nc" id="L121">		this.value = value;</span>
+<span class="nc" id="L122">	}</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

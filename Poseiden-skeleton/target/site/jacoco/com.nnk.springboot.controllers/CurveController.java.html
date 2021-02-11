@@ -17,29 +17,36 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = &quot;Class used to manage curve&quot;)
 @RestController
-<span class="fc" id="L26">public class CurveController {</span>
+@RequestMapping(&quot;/api/curvePoint&quot;)
+<span class="fc" id="L32">public class CurveController {</span>
 	/**
 	 * Inject Curve Point service
 	 */
 	@Autowired
 	private CurveServiceImpl curveService;
 
-<span class="fc" id="L33">	private static final Logger LOGGER = LoggerFactory.getLogger(CurveController.class);</span>
+<span class="fc" id="L39">	private static final Logger LOGGER = LoggerFactory.getLogger(CurveController.class);</span>
 
 	/**
 	 * Find all Curve Point
 	 * 
 	 * @return curve point list
 	 */
-	@GetMapping(&quot;/curvePoint/list&quot;)
+	@ApiOperation(value = &quot;Retrieve all CurvePoints from database&quot;)
+	@GetMapping(&quot;/list&quot;)
 	public List&lt;CurvePoint&gt; home() {
-<span class="fc" id="L42">		return curveService.findCurvePointByList();</span>
+<span class="fc" id="L49">		return curveService.findCurvePointByList();</span>
 	}
 
 	/**
@@ -48,9 +55,10 @@ import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 	 * @param curvePoint
 	 * @return Curve added
 	 */
-	@PostMapping(&quot;/curvePoint/add&quot;)
+	@ApiOperation(value = &quot;Save a new CurvePoint&quot;)
+	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;CurvePoint&gt; addCurvePoint(@Valid @RequestBody CurvePoint curvePoint) {
-<span class="fc" id="L53">		return new ResponseEntity&lt;CurvePoint&gt;(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);</span>
+<span class="fc" id="L61">		return new ResponseEntity&lt;CurvePoint&gt;(curveService.saveCurvePoint(curvePoint), HttpStatus.CREATED);</span>
 	}
 
 	/**
@@ -59,9 +67,10 @@ import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 	 * @param id
 	 * @return Curve found
 	 */
-	@GetMapping(&quot;/curvePoint/{id}&quot;)
+	@ApiOperation(value = &quot;Retrieve CurvePoint from database by Id&quot;)
+	@GetMapping(&quot;/{id}&quot;)
 	public CurvePoint getCurvePointById(@PathVariable Integer id) {
-<span class="fc" id="L64">		return curveService.findCurvePointById(id);</span>
+<span class="fc" id="L73">		return curveService.findCurvePointById(id);</span>
 	}
 
 	/**
@@ -70,24 +79,26 @@ import com.nnk.springboot.servicesImpl.CurveServiceImpl;
 	 * @param curvePoint
 	 * @return Curve updated
 	 */
-	@PutMapping(&quot;/curvePoint/update&quot;)
+	@ApiOperation(value = &quot;Update an existing CurvePoint&quot;)
+	@PutMapping(&quot;/update&quot;)
 	public CurvePoint updateCurve(@Valid @RequestBody CurvePoint curvePoint) {
-<span class="fc" id="L75">		return curveService.updateCurvePoint(curvePoint);</span>
+<span class="fc" id="L85">		return curveService.updateCurvePoint(curvePoint);</span>
 	}
 
 	/**
 	 * Find Curve by Id and delete the Curve
 	 */
-	@DeleteMapping(&quot;/curvePoint/delete/{id}&quot;)
+	@ApiOperation(value = &quot;Delete a CurvePoint from database by Id&quot;)
+	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteCurve(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L83">		Optional&lt;CurvePoint&gt; bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));</span>
-<span class="pc bpc" id="L84" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L85">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L86">			response.setStatus(200);</span>
-<span class="nc" id="L87">			curveService.deleteCurvePointById(id);</span>
-<span class="nc" id="L88">		} else {</span>
-<span class="fc" id="L89">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L94">		Optional&lt;CurvePoint&gt; bidOptional = Optional.ofNullable(curveService.findCurvePointById(id));</span>
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L96">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L97">			response.setStatus(200);</span>
+<span class="nc" id="L98">			curveService.deleteCurvePointById(id);</span>
+<span class="nc" id="L99">		} else {</span>
+<span class="fc" id="L100">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
-<span class="fc" id="L91">	}</span>
+<span class="fc" id="L102">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

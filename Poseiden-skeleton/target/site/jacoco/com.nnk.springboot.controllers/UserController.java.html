@@ -17,49 +17,89 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nnk.springboot.domain.User;
 import com.nnk.springboot.servicesImpl.UserServiceImpl;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = &quot;Class used to manage user&quot;)
 @RestController
-<span class="fc" id="L26">public class UserController {</span>
+@RequestMapping(&quot;/api/user&quot;)
+<span class="fc" id="L32">public class UserController {</span>
 	@Autowired
 	private UserServiceImpl userService;
 
-<span class="fc" id="L30">	private static final Logger LOGGER = LoggerFactory.getLogger(BidListController.class);</span>
+<span class="fc" id="L36">	private static final Logger LOGGER = LoggerFactory.getLogger(BidListController.class);</span>
 
-	@GetMapping(&quot;/user/list&quot;)
+	/**
+	 * Retrieve all the Users from database.
+	 *
+	 * @return a list of all the Users
+	 */
+	@ApiOperation(value = &quot;Retrieve all the existing Users from database&quot;)
+	@GetMapping(&quot;/list&quot;)
 	public List&lt;User&gt; home() {
-<span class="fc" id="L34">		return userService.findAllUsers();</span>
+<span class="fc" id="L46">		return userService.findAllUsers();</span>
 
 	}
 
-	@PostMapping(&quot;/user/add&quot;)
+	/**
+	 * Check data valid and save to db
+	 * 
+	 * @param user
+	 * @return user added
+	 */
+	@ApiOperation(value = &quot;Save a new User to database&quot;)
+	@PostMapping(&quot;/add&quot;)
 	public ResponseEntity&lt;User&gt; addUser(@Valid @RequestBody User user) {
-<span class="nc" id="L40">		return new ResponseEntity&lt;User&gt;(userService.createUser(user), HttpStatus.CREATED);</span>
+<span class="nc" id="L59">		return new ResponseEntity&lt;User&gt;(userService.createUser(user), HttpStatus.CREATED);</span>
 	}
 
-	@GetMapping(&quot;/user/{username}&quot;)
+	/**
+	 * Find User by username.
+	 *
+	 * @param username the username of the User to find
+	 * @return a User if found
+	 */
+	@ApiOperation(value = &quot;Retrieve a User by its username from database&quot;)
+	@GetMapping(&quot;/findByUsername/{username}&quot;)
 	public User getUserByUsername(@PathVariable String username) {
-<span class="fc" id="L45">		return userService.findUserByUserName(username);</span>
+<span class="fc" id="L71">		return userService.findUserByUserName(username);</span>
 	}
 
-	@PutMapping(&quot;/user/update&quot;)
+	/**
+	 * Update an existing User.
+	 * 
+	 * @param user
+	 * @return user updated
+	 */
+	@ApiOperation(value = &quot;Update an existing User&quot;)
+	@PutMapping(&quot;/update&quot;)
 	public User updateUser(@Valid @RequestBody User user) {
-<span class="nc" id="L50">		return userService.updateUser(user);</span>
+<span class="nc" id="L83">		return userService.updateUser(user);</span>
 	}
 
-	@DeleteMapping(&quot;/user/delete/{id}&quot;)
+	/**
+	 * Delete an existing User.
+	 * 
+	 * @param id
+	 * @param response
+	 */
+	@ApiOperation(value = &quot;Delete an existing User from database&quot;)
+	@DeleteMapping(&quot;/delete/{id}&quot;)
 	public void deleteUser(@PathVariable Integer id, HttpServletResponse response) {
-<span class="fc" id="L55">		Optional&lt;User&gt; bidOptional = Optional.ofNullable(userService.findUserById(id));</span>
-<span class="pc bpc" id="L56" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
-<span class="nc" id="L57">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
-<span class="nc" id="L58">			response.setStatus(200);</span>
-<span class="nc" id="L59">			userService.deleteUser(id);</span>
-<span class="nc" id="L60">		} else {</span>
-<span class="fc" id="L61">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
+<span class="fc" id="L95">		Optional&lt;User&gt; bidOptional = Optional.ofNullable(userService.findUserById(id));</span>
+<span class="pc bpc" id="L96" title="1 of 2 branches missed.">		if (bidOptional.isPresent()) {</span>
+<span class="nc" id="L97">			LOGGER.info(&quot;delete, SUCCES&quot;);</span>
+<span class="nc" id="L98">			response.setStatus(200);</span>
+<span class="nc" id="L99">			userService.deleteUser(id);</span>
+<span class="nc" id="L100">		} else {</span>
+<span class="fc" id="L101">			LOGGER.error(&quot;Delete, ERROR&quot;);</span>
 		}
-<span class="fc" id="L63">	}</span>
+<span class="fc" id="L103">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

@@ -48,30 +48,35 @@ import com.nnk.springboot.services.UserService;
 
 	@Override
 	public User findUserByUserName(String username) {
-<span class="fc" id="L51">		return userRepository.findUserByUsername(username);</span>
+<span class="fc" id="L51">		Optional&lt;User&gt; usernameOptional = userRepository.findByUsername(username);</span>
+<span class="pc bpc" id="L52" title="1 of 2 branches missed.">		if (usernameOptional.isPresent()) {</span>
+<span class="fc" id="L53">			User user = usernameOptional.get();</span>
+<span class="fc" id="L54">			return user;</span>
+		}
+<span class="nc" id="L56">		return null;</span>
 	}
 
 	@Override
 	public User createUser(User user) {
-<span class="fc" id="L56">		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
-<span class="fc" id="L57">		user.setPassword(encoder.encode(user.getPassword()));</span>
-<span class="fc" id="L58">		return userRepository.save(user);</span>
+<span class="fc" id="L61">		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L62">		user.setPassword(encoder.encode(user.getPassword()));</span>
+<span class="fc" id="L63">		return userRepository.save(user);</span>
 	}
 
 	@Override
 	public User updateUser(User user) {
-<span class="fc" id="L63">		User updatedUser = findUserById(user.getId());</span>
-<span class="fc" id="L64">		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
-<span class="fc" id="L65">		updatedUser.setPassword(encoder.encode(user.getPassword()));</span>
-<span class="fc" id="L66">		updatedUser.setFullname(user.getFullname());</span>
-<span class="fc" id="L67">		updatedUser.setUsername(user.getUsername());</span>
-<span class="fc" id="L68">		updatedUser.setRole(user.getRole());</span>
-<span class="fc" id="L69">		return userRepository.save(user);</span>
+<span class="fc" id="L68">		User updatedUser = findUserById(user.getId());</span>
+<span class="fc" id="L69">		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();</span>
+<span class="fc" id="L70">		updatedUser.setPassword(encoder.encode(user.getPassword()));</span>
+<span class="fc" id="L71">		updatedUser.setFullname(user.getFullname());</span>
+<span class="fc" id="L72">		updatedUser.setUsername(user.getUsername());</span>
+<span class="fc" id="L73">		updatedUser.setRole(user.getRole());</span>
+<span class="fc" id="L74">		return userRepository.save(user);</span>
 	}
 
 	@Override
 	public void deleteUser(int id) {
-<span class="fc" id="L74">		userRepository.delete(findUserById(id));</span>
-<span class="fc" id="L75">	}</span>
+<span class="fc" id="L79">		userRepository.delete(findUserById(id));</span>
+<span class="fc" id="L80">	}</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

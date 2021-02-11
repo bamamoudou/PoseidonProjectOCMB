@@ -8,12 +8,6 @@ import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.domain.User;
-import com.nnk.springboot.dto.BidListDTO;
-import com.nnk.springboot.dto.CurvePointDTO;
-import com.nnk.springboot.dto.RatingDTO;
-import com.nnk.springboot.dto.RuleNameDTO;
-import com.nnk.springboot.dto.TradeDTO;
-import com.nnk.springboot.dto.UserDTO;
 
 /**
  * This class loads data for unit tests.
@@ -55,37 +49,6 @@ public class DataLoader {
 	}
 
 	/**
-	 * set a new bidListDTO.
-	 * 
-	 * @return bidListDTO
-	 */
-	public BidListDTO setBidListDTO() {
-		BidListDTO bidListDTO = new BidListDTO();
-		bidListDTO.setType("DTO type");
-		bidListDTO.setAccount("DTO account");
-		bidListDTO.setBidQuantity(100.0);
-		bidListDTO.setAskQuantity(100.0);
-		bidListDTO.setBid(10.0);
-		bidListDTO.setAsk(10.0);
-		bidListDTO.setBenchmark("DTO benchmark");
-		bidListDTO.setBidListDate(new Timestamp(System.currentTimeMillis()));
-		bidListDTO.setCommentary("DTO commentary");
-		bidListDTO.setSecurity("DTO security");
-		bidListDTO.setStatus("DTO status");
-		bidListDTO.setTrader("DTO trade");
-		bidListDTO.setBook("DTO book");
-		bidListDTO.setCreationName("DTO creation name");
-		bidListDTO.setCreationDate(new Timestamp(System.currentTimeMillis()));
-		bidListDTO.setRevisionName("DTO revision name");
-		bidListDTO.setRevisionDate(new Timestamp(System.currentTimeMillis()));
-		bidListDTO.setDealName("DTO deal name");
-		bidListDTO.setDealType("DTO deal type");
-		bidListDTO.setSourceListId("2");
-		bidListDTO.setSide("DTO side");
-		return bidListDTO;
-	}
-
-	/**
 	 * set a new CurvePoint.
 	 * 
 	 * @return curvePoint
@@ -98,21 +61,6 @@ public class DataLoader {
 		curvePoint.setValue(50.0);
 		curvePoint.setCreationDate(new Timestamp(System.currentTimeMillis()));
 		return curvePoint;
-	}
-
-	/**
-	 * set a new CurvePointDTO.
-	 * 
-	 * @return curvePointDTO
-	 */
-	public CurvePointDTO setCurvePointDTO() {
-		CurvePointDTO curvePointDTO = new CurvePointDTO();
-		curvePointDTO.setCurveId(2);
-		curvePointDTO.setAsOfDate(new Timestamp(System.currentTimeMillis()));
-		curvePointDTO.setTerm(200.0);
-		curvePointDTO.setValue(100.0);
-		curvePointDTO.setCreationDate(new Timestamp(System.currentTimeMillis()));
-		return curvePointDTO;
 	}
 
 	/**
@@ -131,21 +79,6 @@ public class DataLoader {
 	}
 
 	/**
-	 * set a new RatingDTO.
-	 * 
-	 * @return ratingDTO
-	 */
-	public RatingDTO setRatingDTO() {
-		RatingDTO ratingDTO = new RatingDTO();
-		ratingDTO.setId(1);
-		ratingDTO.setMoodysRating("Moody's rating");
-		ratingDTO.setSandPRating("S&P rating");
-		ratingDTO.setFitchRating("Fitch rating");
-		ratingDTO.setOrderNumber(1255);
-		return ratingDTO;
-	}
-
-	/**
 	 * set a new RuleName.
 	 * 
 	 * @return ruleName
@@ -160,23 +93,6 @@ public class DataLoader {
 		ruleName.setSqlStr("sql str");
 		ruleName.setSqlPart("sql part");
 		return ruleName;
-	}
-
-	/**
-	 * set a new RuleNameDTO.
-	 * 
-	 * @return ruleNameDTO
-	 */
-	public RuleNameDTO setRuleNameDTO() {
-		RuleNameDTO ruleNameDTO = new RuleNameDTO();
-		ruleNameDTO.setId(1);
-		ruleNameDTO.setName("DTO rule name");
-		ruleNameDTO.setDescription("DTO rule name description");
-		ruleNameDTO.setJson("DTO json");
-		ruleNameDTO.setTemplate("DTO template");
-		ruleNameDTO.setSqlStr("DTO sql str");
-		ruleNameDTO.setSqlPart("DTO sql part");
-		return ruleNameDTO;
 	}
 
 	/**
@@ -210,36 +126,6 @@ public class DataLoader {
 	}
 
 	/**
-	 * Set a new TradeDTO
-	 * 
-	 * @return tradeDTO instance
-	 */
-	public TradeDTO setTradeDTO() {
-		TradeDTO tradeDTO = new TradeDTO();
-		tradeDTO.setTradeId(33);
-		tradeDTO.setAccount("TradeDTO account");
-		tradeDTO.setType("TradeDTO type");
-		tradeDTO.setBuyQuantity(29.0);
-		tradeDTO.setSellQuantity(19.0);
-		tradeDTO.setSellPrice(15.0);
-		tradeDTO.setBenchmark("TradeDTO benchmark");
-		tradeDTO.setTradeDate(new Timestamp(System.currentTimeMillis()));
-		tradeDTO.setSecurity("TradeDTO is secure");
-		tradeDTO.setStatus("TradeDTO status");
-		tradeDTO.setTrader("TradeDTO Trader");
-		tradeDTO.setBook("TradeDTO book");
-		tradeDTO.setCreationName("TradeDTO creation name");
-		tradeDTO.setCreationDate(new Timestamp(System.currentTimeMillis()));
-		tradeDTO.setRevisionName("TradeDTO revision name");
-		tradeDTO.setRevisionDate(new Timestamp((System.currentTimeMillis())));
-		tradeDTO.setDealName("TradeDTO deal name");
-		tradeDTO.setDealType("TradeDTO deal type");
-		tradeDTO.setSourceListId("TradDTO Source List ID");
-		tradeDTO.setSide("TradeDTO Side");
-		return tradeDTO;
-	}
-
-	/**
 	 * Set a new User.
 	 * 
 	 * @return a user instance
@@ -252,20 +138,5 @@ public class DataLoader {
 		user.setFullname("I m user");
 		user.setRole("USER");
 		return user;
-	}
-
-	/**
-	 * Set a new UserDTO.
-	 * 
-	 * @return a userDTO instance
-	 */
-	public UserDTO setUserDTO() {
-		UserDTO userDTO = new UserDTO();
-		userDTO.setId(19);
-		userDTO.setUsername("UserDTO name");
-		userDTO.setPassword("AAAdmin123&");
-		userDTO.setFullName("I m userDTO");
-		userDTO.setRole("ADMIN");
-		return userDTO;
 	}
 }
